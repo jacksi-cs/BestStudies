@@ -19,6 +19,7 @@ Jack Si: 25%
 -Merging project  
   
 Deviations:  
+  
 -Got more done on login than we expected but still have more to do like creating Facebook and Google linking  
 -Pushed Sound Detection down to stretch goals because even if added, would be an experimental/optional feature  
 -For the sessions, our current session view is without swiping capabilities. We were having issues getting UIPageViewController working in container, and have pushed it to be resolved ASAP in Beta  

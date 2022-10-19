@@ -23,3 +23,4 @@ Deviations:
 -Pushed Sound Detection down to stretch goals because even if added, would be an experimental/optional feature
 -For the sessions, our current session view is without swiping capabilities. We were having issues getting UIPageViewController working in container, and have pushed it to be resolved ASAP in Beta
 -Settings for Account, Linking, Sounds, and Notifications were not fully implemented as some of them required implementation of features that were slated for Beta or were not mentioned at all
+-Some ViewControllers are unused, in part due to experimentation and preplanning for future features or VCs

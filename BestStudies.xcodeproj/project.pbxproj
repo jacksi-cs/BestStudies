@@ -16,6 +16,7 @@
 		35DFF88028FE210200BCFF3F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 35DFF87F28FE210200BCFF3F /* FirebaseAuth */; };
 		35DFF88228FE49F000BCFF3F /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DFF88128FE49F000BCFF3F /* SessionViewController.swift */; };
 		35DFF88428FE5F4000BCFF3F /* GroupTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DFF88328FE5F4000BCFF3F /* GroupTimeViewController.swift */; };
+		9661336C29009036006EDA80 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9661336B29009036006EDA80 /* LoadingViewController.swift */; };
 		96BF621A28F780660071875C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BF621928F780660071875C /* AppDelegate.swift */; };
 		96BF621C28F780660071875C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BF621B28F780660071875C /* SceneDelegate.swift */; };
 		96BF622128F780660071875C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96BF621F28F780660071875C /* Main.storyboard */; };
@@ -56,6 +57,7 @@
 		35DFF87C28FE0BEE00BCFF3F /* CreateSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionViewController.swift; sourceTree = "<group>"; };
 		35DFF88128FE49F000BCFF3F /* SessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewController.swift; sourceTree = "<group>"; };
 		35DFF88328FE5F4000BCFF3F /* GroupTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTimeViewController.swift; sourceTree = "<group>"; };
+		9661336B29009036006EDA80 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		96BF621628F780660071875C /* BestStudies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestStudies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96BF621928F780660071875C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96BF621B28F780660071875C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			children = (
 				96BF628728F788F50071875C /* BestStudies.entitlements */,
 				96BF621F28F780660071875C /* Main.storyboard */,
+				9661336B29009036006EDA80 /* LoadingViewController.swift */,
 				96BF621928F780660071875C /* AppDelegate.swift */,
 				96BF621B28F780660071875C /* SceneDelegate.swift */,
 				96BF628528F7884C0071875C /* LoginViewController.swift */,
@@ -309,6 +312,7 @@
 				35DFF87B28FDDA2800BCFF3F /* AccountSettingsViewController.swift in Sources */,
 				96BF628928F79EAB0071875C /* RegisterViewController.swift in Sources */,
 				35DFF87528FDD30700BCFF3F /* AchievementsViewController.swift in Sources */,
+				9661336C29009036006EDA80 /* LoadingViewController.swift in Sources */,
 				96BF628628F7884C0071875C /* LoginViewController.swift in Sources */,
 				35DFF87728FDD31300BCFF3F /* StatisticsViewController.swift in Sources */,
 				35DFF88228FE49F000BCFF3F /* SessionViewController.swift in Sources */,

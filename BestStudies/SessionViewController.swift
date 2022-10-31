@@ -12,19 +12,19 @@ import UIKit
 class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
 
-    @IBOutlet weak var totalTimeLabel: UILabel! // Time elapsed
+    @IBOutlet weak var totalTimeElapsedLabel: UILabel! // Time elapsed
     @IBOutlet weak var totalTimeRemainingLabel: UILabel! // Time remaining
     @IBOutlet weak var membersTableView: UITableView!
 
-    var members:[String] = []
-    var slackTimes:[TimeInterval] = []
-    var studyTimers:[Timer] = [] // TODO: Might be able to, in the future, not have individual timers but just stop incrementing individuals studyTimes when off
-    var studyTimes:[TimeInterval] = []
-    var leaveDates:[Date] = []
+    var members:[String] = [] // List of group member names
+    var studyTimers:[Timer] = [] // TODO: Might be able to, in the future, not have individual timers but just stop incrementing individuals studyTimes when off; or keep track of initial room join time and calculate studyTimes with (current time - join time) - total slack time
+    var studyTimes:[TimeInterval] = [] // List of each group member's total study time
+    var slackTimes:[TimeInterval] = [] // List of each group member's total slacking time
+    var leaveDates:[Date] = [] // List of each group member's latest 'left the app' time, used to calculate slack times
 
     var isStopwatch:Bool?
-    var totalTime:TimeInterval? // Decrements from total session time or does not show
-    var countingTime:TimeInterval = 0.0 // Increments
+    var remainingTime:TimeInterval? // Decrements from total session time or does not show
+    var elapsedTime:TimeInterval = 0.0 // Increments from 0
 
     var generalTime:Timer = Timer()
 
@@ -37,8 +37,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         membersTableView.delegate = self
         membersTableView.dataSource = self
-
-//        totalTime = (totalTime == nil) ? 0 : totalTime
 
         members.append("Yourself")
         slackTimes.append(0.0)
@@ -56,65 +54,48 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil) { [self](notification) in
             let difference = Calendar.current.dateComponents([.second], from: leaveDates[0], to: Date())
-            countSlack(timePassed: Double(difference.second!), index: 0)
-
-//            if self.isStopwatch! {
-//                countUp(timePassed: Double(difference.second!))
-//            } else {
-//                countDown(timePassed: Double(difference.second!))
-//            }
+            updateSlackTime(timePassed: Double(difference.second!), index: 0) // TODO: Statically calling index 0 for now, needs to be dynamic when implement multipeer
             
-            countUp(timePassed: Double(difference.second!))
+            updateGeneralTime(timePassed: Double(difference.second!))
         }
-
-//        if self.isStopwatch! {
-//            generalTime = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countUpOne), userInfo: nil, repeats: true)
-//        } else {
-//            generalTime = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDownOne), userInfo: nil, repeats: true)
-//        }
-        generalTime = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countUpOne), userInfo: nil, repeats: true)
         
+        generalTime = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(incrementGeneralTime), userInfo: nil, repeats: true)
+        
+        // TODO: Currently sets all members' study timers locally, when implementing multipeer probably needs to be done separately
         for index in studyTimers.indices {
-            studyTimers[index] = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countUpOneStudy), userInfo: index, repeats: true)
+            studyTimers[index] = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(incrementStudyTime), userInfo: index, repeats: true)
         }
     }
     
     // TODO: Stopping a little slow
-    @objc func countUpOneStudy(timer:Timer) -> Void {
+    // Called every second by studyTimers to increment a member's study time
+    @objc func incrementStudyTime(timer:Timer) -> Void {
         studyTimes[timer.userInfo as! Int] += 1.0
         membersTableView.reloadData()
     }
 
-    @objc func countUpOne() -> Void {
+    // Called every second by generalTimer to update the general remaining (if timer) and elapsed times
+    @objc func incrementGeneralTime() -> Void {
         if !(isStopwatch!) {
-            totalTime! -= 1.0
-             self.totalTimeRemainingLabel.text = timeFormatter.string(from: totalTime!)
+            remainingTime! -= 1.0
+             self.totalTimeRemainingLabel.text = timeFormatter.string(from: remainingTime!)
         }
-        countingTime += 1.0
-        self.totalTimeLabel.text =  timeFormatter.string(from: countingTime)
+        elapsedTime += 1.0
+        self.totalTimeElapsedLabel.text =  timeFormatter.string(from: elapsedTime)
     }
 
-//    @objc func countDownOne() -> Void {
-//        totalTime! -= 1.0
-//        self.totalTimeLabel.text = timeFormatter.string(from: totalTime!)
-//    }
-
-    // Counting the difference when gone and adding it to the general timers
-    @objc func countUp(timePassed: Double) -> Void {
+    // Called after exiting and reentering the app to update the general remaining (if timer) and elapsed times
+    @objc func updateGeneralTime(timePassed: Double) -> Void {
         if !(isStopwatch!) {
-            totalTime! -= timePassed
-            self.totalTimeRemainingLabel.text = timeFormatter.string(for: totalTime!)
+            remainingTime! -= timePassed
+            self.totalTimeRemainingLabel.text = timeFormatter.string(for: remainingTime!)
         }
-        countingTime += timePassed
-        self.totalTimeLabel.text = timeFormatter.string(from: totalTime!)
+        elapsedTime += timePassed
+        self.totalTimeElapsedLabel.text = timeFormatter.string(from: elapsedTime)
     }
 
-//    @objc func countDown(timePassed: Double = 1.0) -> Void {
-//        totalTime! -= timePassed
-//        self.totalTimeLabel.text = timeFormatter.string(from: totalTime!)
-//    }
-
-    @objc func countSlack(timePassed: Double, index: Int) -> Void {
+    // Called after exiting and reenteringthe app to update a member's slack time
+    @objc func updateSlackTime(timePassed: Double, index: Int) -> Void {
         slackTimes[index] += timePassed
         membersTableView.reloadData()
     }
@@ -138,7 +119,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         for studyTimer in studyTimers {
             studyTimer.invalidate()
-//            studyTimer = Timer()
         }
         
         dismiss(animated: true)

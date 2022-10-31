@@ -420,7 +420,7 @@
                     </view>
                     <connections>
                         <outlet property="membersTableView" destination="hea-PQ-OWG" id="9Da-L5-rw9"/>
-                        <outlet property="totalTimeLabel" destination="zXx-h4-wUH" id="4Ia-aw-ixl"/>
+                        <outlet property="totalTimeElapsedLabel" destination="zXx-h4-wUH" id="j9p-Oj-hDu"/>
                         <outlet property="totalTimeRemainingLabel" destination="IGm-Tq-StW" id="cK6-rM-7Ka"/>
                     </connections>
                 </viewController>

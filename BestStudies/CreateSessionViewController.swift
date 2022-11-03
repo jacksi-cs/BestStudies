@@ -73,7 +73,7 @@ class CreateSessionViewController: UIViewController {
             let destVC = segue.destination as! SessionViewController
             destVC.isStopwatch = (sessionType.selectedSegmentIndex == 0)
             
-            destVC.totalTime = destVC.isStopwatch! ? nil : timePicker.countDownDuration
+            destVC.remainingTime = destVC.isStopwatch! ? nil : timePicker.countDownDuration
         }
     }
 }

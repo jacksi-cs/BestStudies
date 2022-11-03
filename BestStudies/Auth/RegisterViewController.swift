@@ -8,10 +8,12 @@ import FirebaseAuth
 
 class RegisterViewController: UIViewController {
 
+    @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var userField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var repeatField: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         passwordField.isSecureTextEntry = true
@@ -37,12 +39,10 @@ class RegisterViewController: UIViewController {
             return
         }
         else {
-            Auth.auth().createUser(withEmail: userField.text!, password: passwordField.text!) {
-                authResult, error in
-                if let error = error as NSError? {
-                    self.errorLabel.text = "\(error.localizedDescription)"
-                } else {
-                    self.errorLabel.text = ""
+            AuthManager.shared.signUp(email: emailField.text!, userName: userField.text!, password: passwordField.text!, errorLabel: errorLabel) {
+                [weak self] success in
+                guard success else {
+                    return
                 }
             }
         }

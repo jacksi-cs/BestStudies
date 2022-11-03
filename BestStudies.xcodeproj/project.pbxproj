@@ -17,6 +17,8 @@
 		35DFF88028FE210200BCFF3F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 35DFF87F28FE210200BCFF3F /* FirebaseAuth */; };
 		35DFF88228FE49F000BCFF3F /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DFF88128FE49F000BCFF3F /* SessionViewController.swift */; };
 		35DFF88428FE5F4000BCFF3F /* GroupTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DFF88328FE5F4000BCFF3F /* GroupTimeViewController.swift */; };
+		961ECE1D29105CB0008B4905 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961ECE1C29105CB0008B4905 /* UserProfile.swift */; };
+		961ECE2129117DBA008B4905 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961ECE2029117DBA008B4905 /* FirebaseAuthManager.swift */; };
 		9661336C29009036006EDA80 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9661336B29009036006EDA80 /* LoadingViewController.swift */; };
 		96BF621A28F780660071875C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BF621928F780660071875C /* AppDelegate.swift */; };
 		96BF621C28F780660071875C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BF621B28F780660071875C /* SceneDelegate.swift */; };
@@ -59,6 +61,8 @@
 		35DFF87C28FE0BEE00BCFF3F /* CreateSessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionViewController.swift; sourceTree = "<group>"; };
 		35DFF88128FE49F000BCFF3F /* SessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewController.swift; sourceTree = "<group>"; };
 		35DFF88328FE5F4000BCFF3F /* GroupTimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTimeViewController.swift; sourceTree = "<group>"; };
+		961ECE1C29105CB0008B4905 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		961ECE2029117DBA008B4905 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
 		9661336B29009036006EDA80 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		96BF621628F780660071875C /* BestStudies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestStudies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96BF621928F780660071875C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +109,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		961ECE1E291082CD008B4905 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				96BF628528F7884C0071875C /* LoginViewController.swift */,
+				96BF628828F79EAB0071875C /* RegisterViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		961ECE1F29117D88008B4905 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				961ECE2029117DBA008B4905 /* FirebaseAuthManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		961ECE222911B084008B4905 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				961ECE1C29105CB0008B4905 /* UserProfile.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		96BF620D28F780660071875C = {
 			isa = PBXGroup;
 			children = (
@@ -128,13 +157,14 @@
 		96BF621828F780660071875C /* BestStudies */ = {
 			isa = PBXGroup;
 			children = (
+				961ECE222911B084008B4905 /* Classes */,
+				961ECE1F29117D88008B4905 /* Managers */,
+				961ECE1E291082CD008B4905 /* Auth */,
 				96BF628728F788F50071875C /* BestStudies.entitlements */,
 				96BF621F28F780660071875C /* Main.storyboard */,
 				9661336B29009036006EDA80 /* LoadingViewController.swift */,
 				96BF621928F780660071875C /* AppDelegate.swift */,
 				96BF621B28F780660071875C /* SceneDelegate.swift */,
-				96BF628528F7884C0071875C /* LoginViewController.swift */,
-				96BF628828F79EAB0071875C /* RegisterViewController.swift */,
 				35DFF87228FDCE1C00BCFF3F /* HomeViewController.swift */,
 				35DFF87C28FE0BEE00BCFF3F /* CreateSessionViewController.swift */,
 				35DFF88128FE49F000BCFF3F /* SessionViewController.swift */,
@@ -311,6 +341,7 @@
 				35DFF87D28FE0BEE00BCFF3F /* CreateSessionViewController.swift in Sources */,
 				96BF621A28F780660071875C /* AppDelegate.swift in Sources */,
 				96BF621C28F780660071875C /* SceneDelegate.swift in Sources */,
+				961ECE2129117DBA008B4905 /* FirebaseAuthManager.swift in Sources */,
 				35DFF87928FDD32000BCFF3F /* SettingsViewController.swift in Sources */,
 				35DFF87B28FDDA2800BCFF3F /* AccountSettingsViewController.swift in Sources */,
 				96BF628928F79EAB0071875C /* RegisterViewController.swift in Sources */,
@@ -320,6 +351,7 @@
 				35DFF87728FDD31300BCFF3F /* StatisticsViewController.swift in Sources */,
 				3508C0262908D17B00719560 /* MemberTableViewCell.swift in Sources */,
 				35DFF88228FE49F000BCFF3F /* SessionViewController.swift in Sources */,
+				961ECE1D29105CB0008B4905 /* UserProfile.swift in Sources */,
 				35DFF87328FDCE1C00BCFF3F /* HomeViewController.swift in Sources */,
 				96BF622428F780660071875C /* BestStudies.xcdatamodeld in Sources */,
 				35DFF88428FE5F4000BCFF3F /* GroupTimeViewController.swift in Sources */,

@@ -23,7 +23,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        settings.count
+        return settings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -38,7 +38,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         switch indexPath.row {
         case 0:
-            performSegue(withIdentifier: "AccountSettingsSegue", sender: self)
+            self.performSegue(withIdentifier: "AccountSettingsSegue", sender: self)
         default:
             print("Hit default case in settings switch");
         }

@@ -60,7 +60,7 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func changeEmailSelected() {
-        let changeEmailSheet = UIAlertController(title: "Change Email", message: "Current Email: \(String(describing: email))", preferredStyle: .alert)
+        let changeEmailSheet = UIAlertController(title: "Change Email", message: "Current Email: \(email!)", preferredStyle: .alert)
         changeEmailSheet.addTextField()
         changeEmailSheet.textFields![0].placeholder = "Enter New Email"
         changeEmailSheet.addTextField()
@@ -90,7 +90,7 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func changeUsernameSelected() {
-        let changeUnameSheet = UIAlertController(title: "Change Username", message: "Current Username: \(String(describing: userName))", preferredStyle: .alert)
+        let changeUnameSheet = UIAlertController(title: "Change Username", message: "Current Username: \(userName!)", preferredStyle: .alert)
         changeUnameSheet.addTextField()
         changeUnameSheet.textFields![0].placeholder = "Enter New Username"
 

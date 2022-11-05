@@ -15,6 +15,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 // Do any additional setup after loading the view.
+        passwordField.isSecureTextEntry = true
         Auth.auth().addStateDidChangeListener() {
             auth, user in
             if user != nil {
@@ -30,14 +31,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func signinButton(_ sender: Any) {
-//        Auth.auth().signIn(withEmail: userField.text!, password: passwordField.text!) {
-//            authResult, error in
-//            if let error = error as NSError? {
-//                self.errorLabel.text = "\(error.localizedDescription)"
-//            } else {
-//                self.errorLabel.text = ""
-//            }
-//        }
         AuthManager.shared.signIn(email: emailField.text ?? "", password: passwordField.text ?? "", errorLabel: errorLabel) {
             [weak self] success in
             guard success else {
@@ -45,5 +38,4 @@ class LoginViewController: UIViewController {
             }
         }
     }
-
 }

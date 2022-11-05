@@ -10,23 +10,29 @@ import FirebaseAuth
 
 class AccountSettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    let accountSettings = ["Change Email", "Change Username", "Change Password", "Log Out", "Delete Account"]
-    
     let cellIdentifier = "AccountCellIdentifier"
     
     private var user: UserProfile?
-    private var email = UserDefaults.standard.string(forKey: "email")
-    private var userName = UserDefaults.standard.string(forKey: "userName")
-    private var password = UserDefaults.standard.string(forKey: "password")
+    private var email = AuthManager.shared.getCurrentEmail()
+    @IBOutlet weak var emailField: UILabel!
+    @IBOutlet weak var userNameField: UILabel!
+    
+    let accountSettings = ["Change Email", "Change Username", "Change Password", "Log Out", "Delete Account"]
     
     @IBOutlet weak var accountTable: UITableView!
     @IBOutlet weak var errorLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Setup Table view
         accountTable.delegate = self
         accountTable.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        userNameField.text = AuthManager.shared.getCurrentUser()
+        emailField.text = AuthManager.shared.getCurrentEmail()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -37,6 +43,10 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath)
         let row = indexPath.row
         cell.textLabel?.text = accountSettings[row]
+        if(row == 4) {
+            cell.textLabel?.textColor = .systemRed
+            cell.textLabel?.font  = UIFont.boldSystemFont(ofSize: 14.0)
+        }
         return cell
     }
     
@@ -60,22 +70,26 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func changeEmailSelected() {
-        let changeEmailSheet = UIAlertController(title: "Change Email", message: "Current Email: \(email!)", preferredStyle: .alert)
+        let changeEmailSheet = UIAlertController(title: "Change Email", message: "Current Email: \(email)", preferredStyle: .alert)
+        // TextField for email
         changeEmailSheet.addTextField()
         changeEmailSheet.textFields![0].placeholder = "Enter New Email"
+        
+        // TextField for password
         changeEmailSheet.addTextField()
         changeEmailSheet.textFields![1].placeholder = "Enter Current Password"
+        changeEmailSheet.textFields![1].isSecureTextEntry = true
 
-        let submitAction = UIAlertAction(title: "Submit", style: .default) { [unowned changeEmailSheet] _ in
+        let submitAction = UIAlertAction(title: "Submit", style: .default) { [self, unowned changeEmailSheet] _ in
             let newEmail = changeEmailSheet.textFields![0].text
             let password = changeEmailSheet.textFields![1].text
-            if(password == self.password) {
+            if(password == password) {
                 if(newEmail == "") {
                     self.errorLabel.text = "Please Input New Email"
                 }
                 else {
                     self.email = newEmail!
-                    UserDefaults.standard.set(newEmail!, forKey: "email")
+                    self.emailField.text = newEmail!
                     self.errorLabel.text = ""
                     AuthManager.shared.changeEmail(email: newEmail!)
                 }
@@ -84,13 +98,16 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
                 self.errorLabel.text = "Incorrect Password"
             }
         }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
         changeEmailSheet.addAction(submitAction)
-
+        changeEmailSheet.addAction(cancelAction)
         present(changeEmailSheet, animated: true)
     }
     
     func changeUsernameSelected() {
-        let changeUnameSheet = UIAlertController(title: "Change Username", message: "Current Username: \(userName!)", preferredStyle: .alert)
+        let changeUnameSheet = UIAlertController(title: "Change Username", message: "Current Username: \(userNameField.text!)", preferredStyle: .alert)
         changeUnameSheet.addTextField()
         changeUnameSheet.textFields![0].placeholder = "Enter New Username"
 
@@ -100,14 +117,14 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
                 self.errorLabel.text = "Please Input New Username"
             }
             else {
-                // TODO Add Logic for database profile changing
-                self.userName = newUserName!
-                UserDefaults.standard.set(newUserName!, forKey: "userName")
+                self.userNameField.text = newUserName
+                AuthManager.shared.changeUsername(userName: newUserName!)
                 self.errorLabel.text = ""
             }
-            
         }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         changeUnameSheet.addAction(submitAction)
+        changeUnameSheet.addAction(cancelAction)
 
         present(changeUnameSheet, animated: true)
     }
@@ -115,22 +132,26 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
     
     func changePasswordSelected() {
         let changePasswordSheet = UIAlertController(title: "Change Password", message: "Please verify password", preferredStyle: .alert)
+        // Current Password field
         changePasswordSheet.addTextField()
         changePasswordSheet.textFields![0].placeholder = "Enter Current Password"
+        changePasswordSheet.textFields![0].isSecureTextEntry = true
+        
+        // New Password Field
         changePasswordSheet.addTextField()
         changePasswordSheet.textFields![1].placeholder = "Enter New Password"
+        changePasswordSheet.textFields![1].isSecureTextEntry = true
         
         let submitAction = UIAlertAction(title: "Submit", style: .default) { [unowned changePasswordSheet] _ in
             let currentPassword = changePasswordSheet.textFields![0].text
             let newPassword = changePasswordSheet.textFields![1].text
-            if(currentPassword == self.password) {
+            //To-do get better check
+            if(currentPassword == currentPassword) {
                 if(newPassword == "") {
                     self.errorLabel.text = "Please Input New Password"
                 }
                 else {
-                    self.password = newPassword!
                     self.errorLabel.text = ""
-                    UserDefaults.standard.set(newPassword!, forKey: "password")
                     AuthManager.shared.changePassword(password: newPassword!)
                 }
             }
@@ -139,7 +160,10 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
             }
         }
         
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
         changePasswordSheet.addAction(submitAction)
+        changePasswordSheet.addAction(cancelAction)
 
         present(changePasswordSheet, animated: true)
     }

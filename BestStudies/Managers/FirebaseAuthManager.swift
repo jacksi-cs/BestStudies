@@ -18,7 +18,7 @@ final class AuthManager {
     public var isSignedIn: Bool {
         return auth.currentUser != nil
     }
-    
+
     public func signUp (
         email: String,
         userName: String,
@@ -33,19 +33,29 @@ final class AuthManager {
         }
         
         auth.createUser(withEmail: email, password: password) {
-                authResult, error in
-                if let error = error as NSError? {
-                    errorLabel.text = "\(error.localizedDescription)"
-                } else {
-                    errorLabel.text = ""
+            result, error in
+            if let error = error as NSError? {
+                errorLabel.text = "\(error.localizedDescription)"
+            } else {
+                if let currentUser = Auth.auth().currentUser?.createProfileChangeRequest() {
+                    currentUser.displayName = userName
+                    currentUser.commitChanges(completion: {error in
+                        if let error = error {
+                            print(error)
+                        } else {
+                            print("DisplayName changed")
+                        }
+                    })
+                }
+                errorLabel.text = ""
+            }
+            guard result != nil, error != nil else {
+                completion(false)
+                return
                 }
             }
-            UserDefaults.standard.set(email, forKey: "email")
-            UserDefaults.standard.set(userName, forKey: "userName")
-            //TODO Don't store passwords in User Defaults
-            UserDefaults.standard.set(password, forKey: "password")
             
-            completion(true)
+        completion(true)
         }
     
     public func signIn (
@@ -79,10 +89,6 @@ final class AuthManager {
     public func signOut() {
         do {
             try auth.signOut()
-            UserDefaults.standard.set("", forKey: "email")
-            UserDefaults.standard.set("", forKey: "userName")
-            //TODO Don't store passwords in User Defaults
-            UserDefaults.standard.set("", forKey: "password")
         }
         catch {
             print(error)
@@ -98,8 +104,17 @@ final class AuthManager {
         auth.currentUser?.updateEmail(to: email)
     }
     
-    public func changeUsername(username: String) {
-        
+    public func changeUsername(userName: String) {
+        if let currentUser = Auth.auth().currentUser?.createProfileChangeRequest() {
+            currentUser.displayName = userName
+            currentUser.commitChanges(completion: {error in
+                if let error = error {
+                    print(error)
+                } else {
+                    print("DisplayName changed")
+                }
+            })
+        }
     }
     
     public func changePassword(password: String) {
@@ -111,7 +126,7 @@ final class AuthManager {
         return (auth.currentUser?.email)!
     }
     
-//    public func getCurrentPassword() -> String {
-//        return (auth.currentUser?.password)!
-//    }
+    public func getCurrentUser() -> String {
+        return (auth.currentUser?.displayName ?? " ")
+    }
 }

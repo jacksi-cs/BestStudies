@@ -42,9 +42,11 @@ class RegisterViewController: UIViewController {
             AuthManager.shared.signUp(email: emailField.text!, userName: userField.text!, password: passwordField.text!, errorLabel: errorLabel) {
                 [weak self] success in
                 guard success else {
+                    
                     return
                 }
             }
+
         }
     }
     

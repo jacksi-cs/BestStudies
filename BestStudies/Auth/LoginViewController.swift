@@ -36,6 +36,12 @@ class LoginViewController: UIViewController {
             guard success else {
                 return
             }
+            SoundManager.shared.playButtonSound(sound: .buttonNoise)
         }
     }
+    
+    @IBAction func signUpButton(_ sender: Any) {
+        SoundManager.shared.playButtonSound(sound: .chillButton)
+    }
+    
 }

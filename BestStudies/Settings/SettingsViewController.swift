@@ -9,7 +9,7 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let settings = ["Account", "Linking", "Sound", "Notifications"]
+    let settings = ["Account", "Sound", "Notifications", "Linking"]
     
     let cellIdentifier = "SettingCellIdentifier"
     
@@ -35,10 +35,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         settingsTable.deselectRow(at: indexPath, animated: true)
-        
+        SoundManager.shared.playButtonSound(sound: .chillButton)
         switch indexPath.row {
         case 0:
             self.performSegue(withIdentifier: "AccountSettingsSegue", sender: self)
+        case 1:
+            self.performSegue(withIdentifier: "SoundSettingsSegue", sender: self)
         default:
             print("Hit default case in settings switch");
         }

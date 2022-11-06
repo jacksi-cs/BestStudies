@@ -100,8 +100,18 @@ final class AuthManager {
         signOut()
     }
     
-    public func changeEmail(email: String) {
-        auth.currentUser?.updateEmail(to: email)
+    public func changeEmail(email: String, errorLabel: UILabel, emailLabel: UILabel) {
+        auth.currentUser?.updateEmail(to: email) {error in
+            if let error = error {
+                errorLabel.text = "\(error.localizedDescription)"
+            }
+            else {
+                emailLabel.text = email
+                SoundManager.shared.playButtonSound(sound: .buttonNoise)
+                print("Email changed")
+            }
+            
+        }
     }
     
     public func changeUsername(userName: String) {

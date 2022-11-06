@@ -34,6 +34,7 @@ class RegisterViewController: UIViewController {
     }
     
     @IBAction func signupButtonPressed(_ sender: Any) {
+
         if(passwordField.text != repeatField.text) {
             errorLabel.text = "Passwords did not match!"
             return
@@ -42,22 +43,18 @@ class RegisterViewController: UIViewController {
             AuthManager.shared.signUp(email: emailField.text!, userName: userField.text!, password: passwordField.text!, errorLabel: errorLabel) {
                 [weak self] success in
                 guard success else {
-                    
+                    UserDefaults.standard.set(true, forKey: "soundOn")
+                    UserDefaults.standard.set(0.5, forKey: "soundVolume")
+                    SoundManager.shared.playButtonSound(sound: .buttonNoise)
                     return
                 }
             }
-
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func signInButton(_ sender: Any) {
+        SoundManager.shared.playButtonSound(sound: .chillButton)
     }
-    */
+    
 
 }

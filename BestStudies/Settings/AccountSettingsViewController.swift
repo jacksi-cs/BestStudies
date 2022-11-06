@@ -52,7 +52,7 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        SoundManager.shared.playButtonSound(sound: .chillButton)
         switch indexPath.row {
         case 0:
             changeEmailSelected()
@@ -89,9 +89,9 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
                 }
                 else {
                     self.email = newEmail!
-                    self.emailField.text = newEmail!
                     self.errorLabel.text = ""
-                    AuthManager.shared.changeEmail(email: newEmail!)
+                    AuthManager.shared.changeEmail(email: newEmail!, errorLabel: errorLabel, emailLabel: emailField)
+                    
                 }
             }
             else {
@@ -113,6 +113,7 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
 
         let submitAction = UIAlertAction(title: "Submit", style: .default) { [unowned changeUnameSheet] _ in
             let newUserName = changeUnameSheet.textFields![0].text
+            SoundManager.shared.playButtonSound(sound: .buttonNoise)
             if(newUserName == "") {
                 self.errorLabel.text = "Please Input New Username"
             }
@@ -153,6 +154,7 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
                 else {
                     self.errorLabel.text = ""
                     AuthManager.shared.changePassword(password: newPassword!)
+                    SoundManager.shared.playButtonSound(sound: .buttonNoise)
                 }
             }
             else {
@@ -172,6 +174,7 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
         let signOutSheet = UIAlertController(title: "Sign Out", message: "Are you sure?", preferredStyle: .actionSheet)
         signOutSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         signOutSheet.addAction(UIAlertAction(title:"Sign Out", style: .destructive, handler: { sender in
+            SoundManager.shared.playButtonSound(sound: .chillButton)
             AuthManager.shared.signOut()
             self.performSegue(withIdentifier: "SignOutSegue", sender: self)
         }))
@@ -182,6 +185,7 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
         let signOutSheet = UIAlertController(title: "Delete Account", message: "Are you sure you want to delete your account?", preferredStyle: .actionSheet)
         signOutSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         signOutSheet.addAction(UIAlertAction(title:"Delete", style: .destructive, handler: { sender in
+            SoundManager.shared.playButtonSound(sound: .chillButton)
             AuthManager.shared.deleteAccount()
             self.performSegue(withIdentifier: "SignOutSegue", sender: self)
         }))

@@ -51,6 +51,7 @@ class CreateSessionViewController: UIViewController {
         timeFormatter.zeroFormattingBehavior = .pad
         timeFormatter.allowedUnits = [.hour, .minute]
         
+        SoundManager.shared.playButtonSound(sound: .chillButton)
         self.timeField.text = timeFormatter.string(from: timePicker.countDownDuration)
         self.view.endEditing(true)
     }
@@ -70,6 +71,7 @@ class CreateSessionViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SessionSegue" {
+            SoundManager.shared.playButtonSound(sound: .buttonNoise)
             let destVC = segue.destination as! SessionViewController
             destVC.isStopwatch = (sessionType.selectedSegmentIndex == 0)
             

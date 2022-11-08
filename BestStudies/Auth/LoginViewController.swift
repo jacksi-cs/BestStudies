@@ -16,14 +16,16 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
                 // Do any additional setup after loading the view.
         passwordField.isSecureTextEntry = true
-        Auth.auth().addStateDidChangeListener() {
+        passwordField.addTarget(self, action: #selector(signinButton), for: UIControl.Event.primaryActionTriggered)
+        Auth.auth().addStateDidChangeListener() { [weak self]
             auth, user in
             if user != nil {
-                self.performSegue(withIdentifier: "homeSegue", sender: nil)
-                self.emailField.text = nil
-                self.passwordField.text = nil
+                self!.performSegue(withIdentifier: "homeSegue", sender: nil)
+                self!.emailField = nil
+                self!.passwordField = nil
             }
         }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

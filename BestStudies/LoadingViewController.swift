@@ -4,6 +4,7 @@
 
 
 import UIKit
+import FirebaseAuth
 
 class LoadingViewController: UIViewController {
 
@@ -18,7 +19,16 @@ class LoadingViewController: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         animateProgress()
-        self.performSegue(withIdentifier: loadingSegue, sender: self)
+        Auth.auth().addStateDidChangeListener() { [weak self]
+            auth, user in
+            if user != nil {
+                self!.performSegue(withIdentifier: "homeSegue", sender: nil)
+            }
+            else {
+                self!.performSegue(withIdentifier: self!.loadingSegue, sender: self)
+            }
+        }
+        
     }
     
     func animateProgress() {

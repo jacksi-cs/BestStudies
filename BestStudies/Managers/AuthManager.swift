@@ -86,28 +86,47 @@ final class AuthManager {
         }
     }
     
-    public func signOut() {
+    public func signOut(
+        completion: @escaping (Bool) -> Void) {
         do {
             try auth.signOut()
+            completion(true)
         }
         catch {
+            completion(false)
             print(error)
         }
     }
     
-    public func deleteAccount() {
-        auth.currentUser?.delete()
-        signOut()
+    public func deleteAccount(
+        errorLabel: UILabel,
+        completion: @escaping (Bool) -> Void
+    ) {
+        auth.currentUser?.delete() {
+            error in
+            if let error = error as NSError? {
+                errorLabel.text = "\(error.localizedDescription)"
+                completion(false)
+            } else {
+                errorLabel.text = ""
+                completion(true)
+            }
+        }
     }
     
-    public func changeEmail(email: String, errorLabel: UILabel, emailLabel: UILabel) {
+    public func changeEmail(
+        email: String,
+        errorLabel: UILabel,
+        completion: @escaping (Bool) -> Void
+    ) {
         auth.currentUser?.updateEmail(to: email) {error in
             if let error = error {
                 errorLabel.text = "\(error.localizedDescription)"
+                completion(false)
             }
             else {
-                emailLabel.text = email
                 SoundManager.shared.playButtonSound(sound: .buttonNoise)
+                completion(true)
                 print("Email changed")
             }
             

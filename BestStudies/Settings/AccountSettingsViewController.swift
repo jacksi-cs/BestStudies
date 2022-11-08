@@ -60,10 +60,10 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
             changeUsernameSelected()
         case 2:
             changePasswordSelected()
-        case 3:
-            logoutSelected()
-        case 4:
-            deactivateSelected()
+//        case 3:
+//            logoutSelected()
+//        case 4:
+//            deactivateSelected()
         default:
             print("Hit default case in settings switch");
         }
@@ -90,7 +90,6 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
                 else {
                     self.email = newEmail!
                     self.errorLabel.text = ""
-                    AuthManager.shared.changeEmail(email: newEmail!, errorLabel: errorLabel, emailLabel: emailField)
                     
                 }
             }
@@ -170,27 +169,27 @@ class AccountSettingsViewController: UIViewController, UITableViewDataSource, UI
         present(changePasswordSheet, animated: true)
     }
     
-    func logoutSelected() {
-        let signOutSheet = UIAlertController(title: "Sign Out", message: "Are you sure?", preferredStyle: .actionSheet)
-        signOutSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        signOutSheet.addAction(UIAlertAction(title:"Sign Out", style: .destructive, handler: { sender in
-            SoundManager.shared.playButtonSound(sound: .chillButton)
-            AuthManager.shared.signOut()
-            self.performSegue(withIdentifier: "SignOutSegue", sender: self)
-        }))
-        present(signOutSheet, animated: true)
-    }
-    
-    func deactivateSelected() {
-        let signOutSheet = UIAlertController(title: "Delete Account", message: "Are you sure you want to delete your account?", preferredStyle: .actionSheet)
-        signOutSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        signOutSheet.addAction(UIAlertAction(title:"Delete", style: .destructive, handler: { sender in
-            SoundManager.shared.playButtonSound(sound: .chillButton)
-            AuthManager.shared.deleteAccount()
-            self.performSegue(withIdentifier: "SignOutSegue", sender: self)
-        }))
-        present(signOutSheet, animated: true)
-    }
+//    func logoutSelected() {
+//        let signOutSheet = UIAlertController(title: "Sign Out", message: "Are you sure?", preferredStyle: .actionSheet)
+//        signOutSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        signOutSheet.addAction(UIAlertAction(title:"Sign Out", style: .destructive, handler: { sender in
+//            SoundManager.shared.playButtonSound(sound: .chillButton)
+//            AuthManager.shared.signOut()
+//            self.performSegue(withIdentifier: "SignOutSegue", sender: self)
+//        }))
+//        present(signOutSheet, animated: true)
+//    }
+//    
+//    func deactivateSelected() {
+//        let signOutSheet = UIAlertController(title: "Delete Account", message: "Are you sure you want to delete your account?", preferredStyle: .actionSheet)
+//        signOutSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        signOutSheet.addAction(UIAlertAction(title:"Delete", style: .destructive, handler: { sender in
+//            SoundManager.shared.playButtonSound(sound: .chillButton)
+//            AuthManager.shared.deleteAccount()
+//            self.performSegue(withIdentifier: "SignOutSegue", sender: self)
+//        }))
+//        present(signOutSheet, animated: true)
+//    }
 }
 func promptForAnswer() {
     

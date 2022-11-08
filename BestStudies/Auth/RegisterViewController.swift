@@ -18,6 +18,7 @@ class RegisterViewController: UIViewController {
         super.viewDidLoad()
         passwordField.isSecureTextEntry = true
         repeatField.isSecureTextEntry = true
+        repeatField.addTarget(self, action: #selector(signupButtonPressed), for: UIControl.Event.primaryActionTriggered)
         // Do any additional setup after loading the view.
 
     }

@@ -45,6 +45,7 @@ class RegisterViewController: UIViewController {
                 guard success else {
                     UserDefaults.standard.set(true, forKey: "soundOn")
                     UserDefaults.standard.set(0.5, forKey: "soundVolume")
+                    UserDefaults.standard.set(false, forKey: "notificationsOn")
                     SoundManager.shared.playButtonSound(sound: .buttonNoise)
                     return
                 }

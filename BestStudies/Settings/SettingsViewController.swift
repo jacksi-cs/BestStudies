@@ -41,6 +41,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             self.performSegue(withIdentifier: "AccountSettingsSegue", sender: self)
         case 1:
             self.performSegue(withIdentifier: "SoundSettingsSegue", sender: self)
+        case 2:
+            self.performSegue(withIdentifier: "NotificationSettingsSegue", sender: self)
         default:
             print("Hit default case in settings switch");
         }

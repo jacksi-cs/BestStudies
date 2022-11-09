@@ -27,6 +27,7 @@ class ConnectionManager: NSObject {
     var membersTableView:UITableView?
     var waitingRoomViewController:UIViewController?
     var homeViewController: UIViewController?
+    var sessionViewController: UIViewController?
     var isHosting = false
     
     var isStopwatch: Bool?
@@ -68,15 +69,24 @@ class ConnectionManager: NSObject {
         advertiserAssistant = nil
         isStopwatch = nil
         remainingTime = nil
+        
+        self.sessionViewController?.dismiss(animated: true)
+        self.waitingRoomViewController?.dismiss(animated: true)
     }
     
     func send(message: String) {
         let data: Data? = "\(message)".data(using: .utf8)
         
-        do {
-            try session!.send(data!, toPeers: session!.connectedPeers, with: .reliable)
-        } catch {
-            print(error.localizedDescription)
+        if message == "Start" {
+            self.advertiserAssistant?.stopAdvertisingPeer()
+        }
+        
+        if session!.connectedPeers.count > 0 {
+            do {
+                try session!.send(data!, toPeers: session!.connectedPeers, with: .reliable)
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
     
@@ -115,9 +125,15 @@ extension ConnectionManager: MCSessionDelegate {
             print("\(peerID.displayName) connecting")
             
         case .notConnected:
+            let sessionVC = sessionViewController as? SessionViewController
             print("\(peerID.displayName) not connected")
             connectedPeers = session.connectedPeers
             connectedPeers.insert(self.myPeerId, at: 0)
+            
+            // TODO: JANKY WAY TO REMOVE session members who left (and are not host)
+            sessionVC?.members = connectedPeers
+            
+            sessionVC?.updatingVariables(index: (sessionVC?.indexDict![peerID])!)
         @unknown default:
             print("Unknown state: \(state)")
         }
@@ -130,6 +146,7 @@ extension ConnectionManager: MCSessionDelegate {
             DispatchQueue.main.async {
                 self.leave()
                 // TODO: Dismiss sessionviewcontroller?
+                self.sessionViewController?.dismiss(animated: true)
                 self.waitingRoomViewController?.dismiss(animated: true)
             }
         } else if (str![str!.startIndex] == "!") {
@@ -150,6 +167,14 @@ extension ConnectionManager: MCSessionDelegate {
             DispatchQueue.main.async {
                 self.waitingRoomViewController!.performSegue(withIdentifier: "SessionSegueIdentifier", sender: nil)
             }
+        } else if (str == "False") {
+            let sessionVC = sessionViewController as? SessionViewController
+            // peerID -> sessionvc dict will return index which used to update bool array
+            sessionVC!.updateOtherDeviceStatus(index: sessionVC!.indexDict![peerID]!, value: false)
+        } else if (str == "True") {
+            let sessionVC = sessionViewController as? SessionViewController
+            // peerID --> sessionvc dict will return index which used to update bool array
+            sessionVC!.updateOtherDeviceStatus(index: sessionVC!.indexDict![peerID]!, value: true)
         }
     }
     

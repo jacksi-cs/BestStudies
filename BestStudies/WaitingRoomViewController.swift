@@ -62,6 +62,7 @@ extension WaitingRoomViewController: UITableViewDelegate, UITableViewDataSource 
             let destVC = segue.destination as! SessionViewController
             destVC.isStopwatch = connectionManager?.isStopwatch
             destVC.remainingTime = connectionManager?.remainingTime
+            destVC.connectionManager = self.connectionManager
         }
     }
 }

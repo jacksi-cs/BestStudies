@@ -23,6 +23,8 @@ class CreateSessionViewController: UIViewController {
         super.viewDidLoad()
         
         createTimePicker()
+        
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
     }
     
     func createToolbar() -> UIToolbar {

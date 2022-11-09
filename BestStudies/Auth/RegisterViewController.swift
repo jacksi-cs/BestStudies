@@ -16,6 +16,7 @@ class RegisterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
         passwordField.isSecureTextEntry = true
         repeatField.isSecureTextEntry = true
         repeatField.addTarget(self, action: #selector(signupButtonPressed), for: UIControl.Event.primaryActionTriggered)

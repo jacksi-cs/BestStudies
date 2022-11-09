@@ -61,7 +61,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         soundOnSwitch = UISwitch(frame: CGRectMake(330, 7.0, 240.0, 42.8))
         
-        soundSlider = UISlider(frame: CGRectMake(155.0, 1.0, 225.0, 42.8))
+        soundSlider = UISlider(frame: CGRectMake(170.0, 1.0, 210.0, 42.8))
         
         notificationOnSwitch = UISwitch(frame: CGRectMake(330, 7.0, 240.0, 42.8))
         
@@ -71,6 +71,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        self.settingsTable.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
         userNameLabel!.text = AuthManager.shared.getCurrentUser()
         emailLabel!.text = AuthManager.shared.getCurrentEmail()
         soundOnSwitch!.isOn = UserDefaults.standard.bool(forKey: "soundOn")
@@ -86,6 +88,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath)
         let row = indexPath.row
         cell.textLabel?.text = settings[row]
+        cell.backgroundColor = .white
         switch indexPath.row {
         case 0:
             

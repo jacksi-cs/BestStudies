@@ -16,6 +16,8 @@ class LoadingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         animateProgress()

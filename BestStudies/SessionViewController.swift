@@ -34,10 +34,11 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
 
         membersTableView.delegate = self
         membersTableView.dataSource = self
-
+        
         members.append("Yourself")
         slackTimes.append(0.0)
         studyTimes.append(0.0)

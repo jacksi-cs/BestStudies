@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3508C0262908D17B00719560 /* MemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3508C0252908D17B00719560 /* MemberTableViewCell.swift */; };
+		35D17CE8291B3A97004FF504 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D17CE7291B3A97004FF504 /* ConnectionManager.swift */; };
+		35D17CEA291B3B7F004FF504 /* WaitingRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D17CE9291B3B7F004FF504 /* WaitingRoomViewController.swift */; };
+		35D17CED291B3CCE004FF504 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 35D17CEC291B3CCE004FF504 /* FirebaseAuth */; };
 		35DFF87328FDCE1C00BCFF3F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DFF87228FDCE1C00BCFF3F /* HomeViewController.swift */; };
 		35DFF87528FDD30700BCFF3F /* AchievementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DFF87428FDD30700BCFF3F /* AchievementsViewController.swift */; };
 		35DFF87728FDD31300BCFF3F /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DFF87628FDD31300BCFF3F /* StatisticsViewController.swift */; };
@@ -15,7 +18,6 @@
 		35DFF87D28FE0BEE00BCFF3F /* CreateSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DFF87C28FE0BEE00BCFF3F /* CreateSessionViewController.swift */; };
 		35DFF88228FE49F000BCFF3F /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DFF88128FE49F000BCFF3F /* SessionViewController.swift */; };
 		35DFF88428FE5F4000BCFF3F /* GroupTimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DFF88328FE5F4000BCFF3F /* GroupTimeViewController.swift */; };
-		960749002915F39E0025E980 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 960748FF2915F39E0025E980 /* FirebaseAuth */; };
 		96074902291842B40025E980 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96074901291842B40025E980 /* SoundManager.swift */; };
 		96074905291843E30025E980 /* buttonNoise.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 96074904291843E30025E980 /* buttonNoise.mp3 */; };
 		96074907291846010025E980 /* chillButton.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 96074906291846010025E980 /* chillButton.mp3 */; };
@@ -56,6 +58,8 @@
 
 /* Begin PBXFileReference section */
 		3508C0252908D17B00719560 /* MemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTableViewCell.swift; sourceTree = "<group>"; };
+		35D17CE7291B3A97004FF504 /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
+		35D17CE9291B3B7F004FF504 /* WaitingRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewController.swift; sourceTree = "<group>"; };
 		35DFF87228FDCE1C00BCFF3F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		35DFF87428FDD30700BCFF3F /* AchievementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsViewController.swift; sourceTree = "<group>"; };
 		35DFF87628FDD31300BCFF3F /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
@@ -94,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				960749002915F39E0025E980 /* FirebaseAuth in Frameworks */,
+				35D17CED291B3CCE004FF504 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +199,8 @@
 				9607490C29184E3A0025E980 /* Settings */,
 				35DFF87C28FE0BEE00BCFF3F /* CreateSessionViewController.swift */,
 				35DFF88128FE49F000BCFF3F /* SessionViewController.swift */,
+				35D17CE9291B3B7F004FF504 /* WaitingRoomViewController.swift */,
+				35D17CE7291B3A97004FF504 /* ConnectionManager.swift */,
 				3508C0252908D17B00719560 /* MemberTableViewCell.swift */,
 				35DFF88328FE5F4000BCFF3F /* GroupTimeViewController.swift */,
 				35DFF87428FDD30700BCFF3F /* AchievementsViewController.swift */,
@@ -242,7 +248,7 @@
 			);
 			name = BestStudies;
 			packageProductDependencies = (
-				960748FF2915F39E0025E980 /* FirebaseAuth */,
+				35D17CEC291B3CCE004FF504 /* FirebaseAuth */,
 			);
 			productName = BestStudies;
 			productReference = 96BF621628F780660071875C /* BestStudies.app */;
@@ -317,7 +323,7 @@
 			);
 			mainGroup = 96BF620D28F780660071875C;
 			packageReferences = (
-				960748FE2915F39E0025E980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				35D17CEB291B3CCE004FF504 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 96BF621728F780660071875C /* Products */;
 			projectDirPath = "";
@@ -370,6 +376,7 @@
 				96BF621C28F780660071875C /* SceneDelegate.swift in Sources */,
 				961ECE2129117DBA008B4905 /* AuthManager.swift in Sources */,
 				35DFF87928FDD32000BCFF3F /* SettingsViewController.swift in Sources */,
+				35D17CE8291B3A97004FF504 /* ConnectionManager.swift in Sources */,
 				96BF628928F79EAB0071875C /* RegisterViewController.swift in Sources */,
 				35DFF87528FDD30700BCFF3F /* AchievementsViewController.swift in Sources */,
 				9661336C29009036006EDA80 /* LoadingViewController.swift in Sources */,
@@ -377,6 +384,7 @@
 				35DFF87728FDD31300BCFF3F /* StatisticsViewController.swift in Sources */,
 				3508C0262908D17B00719560 /* MemberTableViewCell.swift in Sources */,
 				35DFF88228FE49F000BCFF3F /* SessionViewController.swift in Sources */,
+				35D17CEA291B3B7F004FF504 /* WaitingRoomViewController.swift in Sources */,
 				961ECE1D29105CB0008B4905 /* UserProfile.swift in Sources */,
 				35DFF87328FDCE1C00BCFF3F /* HomeViewController.swift in Sources */,
 				96BF622428F780660071875C /* BestStudies.xcdatamodeld in Sources */,
@@ -722,7 +730,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		960748FE2915F39E0025E980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		35D17CEB291B3CCE004FF504 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
@@ -733,9 +741,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		960748FF2915F39E0025E980 /* FirebaseAuth */ = {
+		35D17CEC291B3CCE004FF504 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 960748FE2915F39E0025E980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 35D17CEB291B3CCE004FF504 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */

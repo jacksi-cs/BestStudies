@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hA1-bT-icF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hA1-bT-icF">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -261,7 +261,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="createButtonPressed:" destination="DgU-F8-s0g" eventType="touchUpInside" id="p27-zT-W40"/>
-                                    <segue destination="csa-88-462" kind="show" id="NWo-0B-8Uj"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11w-y1-GGY">
@@ -285,6 +284,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Ready to Study?" id="jZi-XR-QBS"/>
+                    <connections>
+                        <segue destination="NM6-of-M4B" kind="presentation" identifier="WaitingRoomSegueIdentifier1" modalPresentationStyle="fullScreen" id="Sw8-ep-ACZ"/>
+                        <segue destination="csa-88-462" kind="show" identifier="CreateSessionSegueIdentifier" id="F9O-8b-SBd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2vH-b7-9Wk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -318,7 +321,7 @@
                                     <fontDescription key="titleFontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="17"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <segue destination="HG6-b3-VZN" kind="presentation" identifier="SessionSegue" modalPresentationStyle="fullScreen" id="P3g-IL-akS"/>
+                                    <action selector="createSessionPressed:" destination="csa-88-462" eventType="touchUpInside" id="oV5-Uh-03F"/>
                                 </connections>
                             </button>
                             <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0h 30m" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Yz-LA-aga">
@@ -346,11 +349,12 @@
                         <outlet property="createSessionButton" destination="eup-Mo-Nzb" id="Ww8-75-D0m"/>
                         <outlet property="sessionType" destination="Vfa-3T-378" id="9YE-yg-7NU"/>
                         <outlet property="timeField" destination="3Yz-LA-aga" id="1mz-iB-SFp"/>
+                        <segue destination="NM6-of-M4B" kind="presentation" identifier="WaitingRoomSegueIdentifier2" modalPresentationStyle="fullScreen" id="gjT-A1-0AH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O5H-cP-pHd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2255.3846153846152" y="2988.6255924170614"/>
+            <point key="canvasLocation" x="-1463" y="2836"/>
         </scene>
         <!--Session View Controller-->
         <scene sceneID="WSc-yO-pqD">
@@ -626,8 +630,81 @@
             </objects>
             <point key="canvasLocation" x="284.61538461538458" y="1441.7061611374406"/>
         </scene>
+        <!--Waiting Room View Controller-->
+        <scene sceneID="X4T-vY-meV">
+            <objects>
+                <viewController id="NM6-of-M4B" customClass="WaitingRoomViewController" customModule="BestStudies" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1WZ-cr-7zS">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ip6-Dp-r5I">
+                                <rect key="frame" x="0.0" y="59" width="384" height="553"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell" textLabel="ZmP-fX-4cP" style="IBUITableViewCellStyleDefault" id="rH5-tK-Rka">
+                                        <rect key="frame" x="0.0" y="50" width="384" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rH5-tK-Rka" id="hvg-7h-O56">
+                                            <rect key="frame" x="0.0" y="0.0" width="384" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZmP-fX-4cP">
+                                                    <rect key="frame" x="20" y="0.0" width="344" height="43.666667938232422"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9my-dr-nSK">
+                                <rect key="frame" x="162" y="711" width="69" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Leave"/>
+                                <connections>
+                                    <action selector="leavePressed:" destination="NM6-of-M4B" eventType="touchUpInside" id="qw8-dN-X0I"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UG8-Th-PFI">
+                                <rect key="frame" x="134" y="637" width="125" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Start Session"/>
+                                <connections>
+                                    <action selector="startPressed:" destination="NM6-of-M4B" eventType="touchUpInside" id="l2F-rq-7Hv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="MaU-c6-Ep2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ip6-Dp-r5I" firstAttribute="top" secondItem="MaU-c6-Ep2" secondAttribute="top" id="IRm-CH-vO1"/>
+                            <constraint firstItem="UG8-Th-PFI" firstAttribute="top" secondItem="ip6-Dp-r5I" secondAttribute="bottom" constant="25" id="Jx7-H2-rKM"/>
+                            <constraint firstItem="ip6-Dp-r5I" firstAttribute="leading" secondItem="MaU-c6-Ep2" secondAttribute="leading" id="Kx2-bE-UAD"/>
+                            <constraint firstItem="9my-dr-nSK" firstAttribute="centerX" secondItem="1WZ-cr-7zS" secondAttribute="centerX" id="Sfn-rL-j4I"/>
+                            <constraint firstItem="UG8-Th-PFI" firstAttribute="centerX" secondItem="1WZ-cr-7zS" secondAttribute="centerX" id="Vsg-0o-rcJ"/>
+                            <constraint firstItem="MaU-c6-Ep2" firstAttribute="bottom" secondItem="9my-dr-nSK" secondAttribute="bottom" constant="72" id="lJH-xe-CiG"/>
+                            <constraint firstItem="MaU-c6-Ep2" firstAttribute="trailing" secondItem="ip6-Dp-r5I" secondAttribute="trailing" constant="9" id="m4C-jj-1ho"/>
+                            <constraint firstItem="9my-dr-nSK" firstAttribute="top" secondItem="UG8-Th-PFI" secondAttribute="bottom" constant="39" id="y1A-ei-uTX"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="syy-Ug-Q8b"/>
+                    <connections>
+                        <outlet property="membersTableView" destination="ip6-Dp-r5I" id="isC-Xm-HJu"/>
+                        <outlet property="startButton" destination="UG8-Th-PFI" id="Jlg-Bj-wb0"/>
+                        <segue destination="HG6-b3-VZN" kind="presentation" identifier="SessionSegueIdentifier" modalPresentationStyle="fullScreen" id="bVn-bR-LOY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="90a-Eu-bfx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2955" y="3596"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="gjT-A1-0AH"/>
         <segue reference="mbf-fZ-Qwa"/>
         <segue reference="gwU-YO-FKn"/>
     </inferredMetricsTieBreakers>

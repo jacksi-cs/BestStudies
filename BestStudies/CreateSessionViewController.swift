@@ -19,12 +19,12 @@ class CreateSessionViewController: UIViewController {
     
     var sessionTime: TimeInterval = SECONDS_IN_MINUTE * 30
     
+    var connectionManager: ConnectionManager = ConnectionManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        createTimePicker()
-        
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        createTimePicker()
     }
     
     func createToolbar() -> UIToolbar {
@@ -71,13 +71,30 @@ class CreateSessionViewController: UIViewController {
         }
     }
     
+    @IBAction func createSessionPressed(_ sender: Any) {
+        connectionManager.isStopwatch = (sessionType.selectedSegmentIndex == 0)
+        connectionManager.remainingTime = connectionManager.isStopwatch! ? nil : timePicker.countDownDuration
+        
+        connectionManager.host()
+        
+        performSegue(withIdentifier: "WaitingRoomSegueIdentifier2", sender: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SessionSegue" {
-            SoundManager.shared.playButtonSound(sound: .buttonNoise)
-            let destVC = segue.destination as! SessionViewController
-            destVC.isStopwatch = (sessionType.selectedSegmentIndex == 0)
+//        if segue.identifier == "SessionSegue" {
+//            SoundManager.shared.playButtonSound(sound: .buttonNoise)
+//            let destVC = segue.destination as! SessionViewController
+//
+//            destVC.isStopwatch = (sessionType.selectedSegmentIndex == 0)
+//            destVC.remainingTime = destVC.isStopwatch! ? nil : timePicker.countDownDuration
+//        }
+        if segue.identifier == "WaitingRoomSegueIdentifier2" {
             
-            destVC.remainingTime = destVC.isStopwatch! ? nil : timePicker.countDownDuration
+            SoundManager.shared.playButtonSound(sound: .buttonNoise)
+            
+            let destVC = segue.destination as! WaitingRoomViewController
+            destVC.connectionManager = self.connectionManager
+            // TODO: Need to pass on valuable information to waitingroom --> session (isstopwatch, remainingtime, countdownduration, etc.)
         }
     }
 }

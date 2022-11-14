@@ -433,7 +433,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eU5-id-fF8">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eU5-id-fF8">
                                 <rect key="frame" x="162.33333333333334" y="704.66666666666663" width="68.666666666666657" height="34.333333333333371"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Leave"/>
@@ -526,7 +526,7 @@
         <scene sceneID="1ed-Xv-G7x">
             <objects>
                 <viewController id="Y34-hg-bcg" customClass="SettingsViewController" customModule="BestStudies" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="bgj-0j-HgE">
+                    <view key="view" contentMode="scaleToFill" id="bgj-0j-HgE">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -706,7 +706,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="gjT-A1-0AH"/>
         <segue reference="mbf-fZ-Qwa"/>
-        <segue reference="gwU-YO-FKn"/>
+        <segue reference="PLb-2W-JMt"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="linkColor">

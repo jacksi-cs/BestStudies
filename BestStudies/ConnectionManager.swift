@@ -27,7 +27,7 @@ class ConnectionManager: NSObject {
     var membersTableView:UITableView?
     var waitingRoomViewController:UIViewController?
     var homeViewController: UIViewController?
-    var sessionViewController: UIViewController?
+    var sessionViewController: SessionViewController?
     var isHosting = false
     
     var isStopwatch: Bool?
@@ -144,7 +144,8 @@ extension ConnectionManager: MCSessionDelegate {
         
         if (str == "Host left") {
             DispatchQueue.main.async {
-                self.leave()
+                
+                self.sessionViewController?.leavePressed(UIButton())
                 // TODO: Dismiss sessionviewcontroller?
                 self.sessionViewController?.dismiss(animated: true)
                 self.waitingRoomViewController?.dismiss(animated: true)

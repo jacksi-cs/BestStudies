@@ -21,6 +21,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     var studyTimes:[TimeInterval]? // List of each group member's total study time
     var slackTimes:[TimeInterval]? // List of each group member's total slacking time
     var leaveDates:[Date]? // List of each group member's latest 'left the app' time, used to calculate slack times
+    
+    var leaveObserver:NSObjectProtocol?
+    var comeBackObserver:NSObjectProtocol?
 
     var isStopwatch:Bool?
     var remainingTime:TimeInterval? // Decrements from total session time or does not show
@@ -35,7 +38,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     var indexDict:[MCPeerID:Int]? // Dictionary of key: peerID, values: index
 
     override func viewDidLoad() {
-        print("VIEW DID LOAD CALLED")
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
@@ -59,12 +61,16 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         timeFormatter.zeroFormattingBehavior = .pad
         timeFormatter.allowedUnits = [.hour, .minute, .second]
 
-        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { [self](notification) in
+        print("view did load \(leaveDates) \(Thread.current) \(Array(repeating: Date(), count: connectionManager?.connectedPeers.count ?? 1))")
+        print(leaveDates!.count)
+        
+        leaveObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { [self](notification) in
+            print("\(self.leaveDates!) \(Thread.current) left in background")
             self.connectionManager?.send(message: "False")
-            leaveDates![0] = Date()
+            self.leaveDates![0] = Date()
         }
 
-        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil) { [self](notification) in
+        comeBackObserver = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil) { [self](notification) in
             self.connectionManager?.send(message: "True")
             let difference = Calendar.current.dateComponents([.second], from: leaveDates![0], to: Date())
             updateSlackTime(timePassed: Double(difference.second!), index: 0)
@@ -177,7 +183,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 
     @IBAction func leavePressed(_ sender: Any) {
-//        navigationController?.popViewController(animated: true)
+        NotificationCenter.default.removeObserver(leaveObserver!, name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(comeBackObserver!, name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        print("leave pressed \(Date.now)")
         generalTime.invalidate()
         
         for studyTimer in studyTimers! {

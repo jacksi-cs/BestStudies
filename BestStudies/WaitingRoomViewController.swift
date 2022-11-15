@@ -63,6 +63,7 @@ extension WaitingRoomViewController: UITableViewDelegate, UITableViewDataSource 
             destVC.isStopwatch = connectionManager?.isStopwatch
             destVC.remainingTime = connectionManager?.remainingTime
             destVC.connectionManager = self.connectionManager
+            destVC.sessionStartTime = Date()
         }
     }
 }

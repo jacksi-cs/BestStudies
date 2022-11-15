@@ -21,10 +21,14 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     var studyTimes:[TimeInterval]? // List of each group member's total study time
     var slackTimes:[TimeInterval]? // List of each group member's total slacking time
     var leaveDates:[Date]? // List of each group member's latest 'left the app' time, used to calculate slack times
+    
+    var leaveObserver:NSObjectProtocol?
+    var comeBackObserver:NSObjectProtocol?
 
     var isStopwatch:Bool?
     var remainingTime:TimeInterval? // Decrements from total session time or does not show
     var elapsedTime:TimeInterval = 0.0 // Increments from 0
+    var sessionStartTime:Date!
 
     var generalTime:Timer = Timer()
 
@@ -35,7 +39,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     var indexDict:[MCPeerID:Int]? // Dictionary of key: peerID, values: index
 
     override func viewDidLoad() {
-        print("VIEW DID LOAD CALLED")
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
@@ -59,17 +62,21 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         timeFormatter.zeroFormattingBehavior = .pad
         timeFormatter.allowedUnits = [.hour, .minute, .second]
 
-        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { [self](notification) in
+//        print("view did load \(leaveDates) \(Thread.current) \(Array(repeating: Date(), count: connectionManager?.connectedPeers.count ?? 1))")
+//        print(leaveDates!.count)
+        
+        leaveObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { [self](notification) in
+            print("\(self.leaveDates!) \(Thread.current) left in background")
             self.connectionManager?.send(message: "False")
-            leaveDates![0] = Date()
+            self.leaveDates![0] = Date()
         }
 
-        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil) { [self](notification) in
+        comeBackObserver = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil) { [self](notification) in
             self.connectionManager?.send(message: "True")
             let difference = Calendar.current.dateComponents([.second], from: leaveDates![0], to: Date())
             updateSlackTime(timePassed: Double(difference.second!), index: 0)
             
-            updateGeneralTime(timePassed: Double(difference.second!))
+//            updateGeneralTime(timePassed: Double(difference.second!))
         }
         
         generalTime = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(incrementGeneralTime), userInfo: nil, repeats: true)
@@ -110,19 +117,19 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
             remainingTime! -= 1.0
              self.totalTimeRemainingLabel.text = timeFormatter.string(from: remainingTime!)
         }
-        elapsedTime += 1.0
+        elapsedTime = Date() - self.sessionStartTime
         self.totalTimeElapsedLabel.text =  timeFormatter.string(from: elapsedTime)
     }
 
     // Called after exiting and reentering the app to update the general remaining (if timer) and elapsed times
-    @objc func updateGeneralTime(timePassed: Double) -> Void {
-        if !(isStopwatch!) {
-            remainingTime! -= timePassed
-            self.totalTimeRemainingLabel.text = timeFormatter.string(for: remainingTime!)
-        }
-        elapsedTime += timePassed
-        self.totalTimeElapsedLabel.text = timeFormatter.string(from: elapsedTime)
-    }
+//    @objc func updateGeneralTime(timePassed: Double) -> Void {
+//        if !(isStopwatch!) {
+//            remainingTime! -= timePassed
+//            self.totalTimeRemainingLabel.text = timeFormatter.string(for: remainingTime!)
+//        }
+//        elapsedTime += timePassed
+//        self.totalTimeElapsedLabel.text = timeFormatter.string(from: elapsedTime)
+//    }
 
     // Called after exiting and reentering the app to update a member's slack time
     @objc func updateSlackTime(timePassed: Double, index: Int) -> Void {
@@ -177,7 +184,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 
     @IBAction func leavePressed(_ sender: Any) {
-//        navigationController?.popViewController(animated: true)
+        NotificationCenter.default.removeObserver(leaveObserver!, name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.removeObserver(comeBackObserver!, name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        print("leave pressed \(Date.now)")
         generalTime.invalidate()
         
         for studyTimer in studyTimers! {
@@ -194,5 +204,11 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         connectionManager!.leave()
         
 //        dismiss(animated: true)
+    }
+}
+
+extension Date {
+    static func - (lhs: Date, rhs: Date) -> TimeInterval {
+        return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
     }
 }

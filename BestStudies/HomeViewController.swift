@@ -33,6 +33,27 @@ class HomeViewController: UIViewController {
         connectionManager.join()
     }
     
+    @IBAction func helpButtonPressed(_ sender: Any) {
+        let controller = UIAlertController(
+            title: "How To!",
+            message: """
+                    When you're ready to study, you have a few session options to choose from. \n\nWhen creating a session, you are able to choose between  stopwatch and timer mode. Ready to see how long you can focus? Start up a stopwatch session! Need to grind for a set amount of time? Set how long you want the session to last. \n\nGet together with friends or teammates for group productivity. Joining a session is super easy with Peer Connectivity. When you're near your friends, add who you would like to be in your session. When you're in the virtual study room, you'll be able to see everyone present!
+                    """,
+            preferredStyle: .alert)
+        
+        controller.addAction(UIAlertAction(
+            title: "Dismiss",
+            style: .cancel,
+            handler: {
+                (paramAction:UIAlertAction!) in
+                
+                
+            }))
+        
+        present(controller, animated: true)
+    }
+    
+    
     func presentNotificationPrompt() {
         let current = UNUserNotificationCenter.current()
         current.getNotificationSettings { settings in

@@ -273,13 +273,23 @@
                                     <action selector="joinButtonPressed:" destination="DgU-F8-s0g" eventType="touchUpInside" id="WZ4-6I-SGg"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="85S-yF-GNb">
+                                <rect key="frame" x="171.66666666666666" y="415" width="50" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="questionmark.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="helpButtonPressed:" destination="DgU-F8-s0g" eventType="touchUpInside" id="7pG-dm-ePh"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Jud-Vf-g3G"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="pgR-7K-pmb" firstAttribute="centerX" secondItem="1f7-72-D4x" secondAttribute="centerX" id="8mz-4y-7GL"/>
+                            <constraint firstItem="85S-yF-GNb" firstAttribute="centerX" secondItem="1f7-72-D4x" secondAttribute="centerX" id="PiM-fa-4Sj"/>
                             <constraint firstItem="pgR-7K-pmb" firstAttribute="top" secondItem="Jud-Vf-g3G" secondAttribute="top" constant="99" id="Y3f-9F-ZLk"/>
                             <constraint firstItem="11w-y1-GGY" firstAttribute="centerX" secondItem="1f7-72-D4x" secondAttribute="centerX" id="esG-i4-ZpK"/>
+                            <constraint firstItem="Jud-Vf-g3G" firstAttribute="bottom" secondItem="85S-yF-GNb" secondAttribute="bottom" constant="318.89999999999998" id="hQV-1d-llX"/>
                             <constraint firstItem="11w-y1-GGY" firstAttribute="top" secondItem="pgR-7K-pmb" secondAttribute="bottom" constant="53" id="r3O-I8-b0X"/>
                         </constraints>
                     </view>
@@ -392,7 +402,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="s2D-Jg-xJV">
-                                                    <rect key="frame" x="5" y="11.000000000000005" width="340" height="20.333333333333332"/>
+                                                    <rect key="frame" x="5" y="11.000000000000007" width="340" height="20.333333333333336"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jhy-g0-Kg3">
                                                             <rect key="frame" x="0.0" y="0.0" width="100" height="20.333333333333332"/>
@@ -584,7 +594,7 @@
         <scene sceneID="1ed-Xv-G7x">
             <objects>
                 <viewController id="Y34-hg-bcg" customClass="SettingsViewController" customModule="BestStudies" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="bgj-0j-HgE">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="bgj-0j-HgE">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -762,11 +772,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="gjT-A1-0AH"/>
+        <segue reference="Sw8-ep-ACZ"/>
         <segue reference="mbf-fZ-Qwa"/>
         <segue reference="PLb-2W-JMt"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="questionmark.circle" catalog="system" width="128" height="123"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

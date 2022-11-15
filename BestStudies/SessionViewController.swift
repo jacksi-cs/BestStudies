@@ -19,7 +19,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     var members:[MCPeerID]? // List of group member names
     
     var joinTimes:[Date]?
-    var studyTimers:[Timer]? // TODO: Might be able to, in the future, not have individual timers but just stop incrementing individuals studyTimes when off; or keep track of initial room join time and calculate studyTimes with (current time - join time) - total slack time
+    var studyTimers:Timer? // TODO: Might be able to, in the future, not have individual timers but just stop incrementing individuals studyTimes when off; or keep track of initial room join time and calculate studyTimes with (current time - join time) - total slack time
     var studyTimes:[TimeInterval]? // List of each group member's total study time
     var slackTimes:[TimeInterval]? // List of each group member's total slacking time
     var leaveDates:[Date]? // List of each group member's latest 'left the app' time, used to calculate slack times
@@ -38,7 +38,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     var timeFormatter = DateComponentsFormatter()
     
     var connectionManager: ConnectionManager?
-    var otherDeviceStatus: [Bool]? // Array of other devices and whether they are on or off the app (true or false); index 0 is your device status which is not updated or used
+    var otherDeviceStatus: [Bool]? // Array of other devices and whether they are on or off the app (true or false); index 0 is your device own status (indexing matches connectionManager.connectedPeers)
     var indexDict:[MCPeerID:Int]? // Dictionary of key: peerID, values: index
 
     override func viewDidLoad() {
@@ -57,37 +57,35 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         indexDict = Dictionary(uniqueKeysWithValues: zip(members!, Array(0...members!.count-1)))
         slackTimes = Array(repeating: 0.0, count: connectionManager?.connectedPeers.count ?? 1)
         studyTimes = Array(repeating: 0.0, count: connectionManager?.connectedPeers.count ?? 1)
-        studyTimers = Array(repeating: Timer(), count: connectionManager?.connectedPeers.count ?? 1)
+//        studyTimers = Array(repeating: Timer(), count: connectionManager?.connectedPeers.count ?? 1)
         leaveDates = Array(repeating: Date(), count: connectionManager?.connectedPeers.count ?? 1)
         otherDeviceStatus = Array(repeating: true, count: connectionManager?.connectedPeers.count ?? 1)
 
         timeFormatter.unitsStyle = .abbreviated
         timeFormatter.zeroFormattingBehavior = .pad
         timeFormatter.allowedUnits = [.hour, .minute, .second]
-
-//        print("view did load \(leaveDates) \(Thread.current) \(Array(repeating: Date(), count: connectionManager?.connectedPeers.count ?? 1))")
-//        print(leaveDates!.count)
         
         leaveObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { [self](notification) in
             print("\(self.leaveDates!) \(Thread.current) left in background")
+            self.otherDeviceStatus![0] = false
             self.connectionManager?.send(message: "False")
             self.leaveDates![0] = Date()
         }
 
         comeBackObserver = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil) { [self](notification) in
             self.connectionManager?.send(message: "True")
+            self.otherDeviceStatus![0] = true
             let difference = Calendar.current.dateComponents([.second], from: leaveDates![0], to: Date())
             updateSlackTime(timePassed: Double(difference.second!), index: 0)
-            
-//            updateGeneralTime(timePassed: Double(difference.second!))
         }
         
         generalTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(incrementGeneralTime), userInfo: nil, repeats: true)
         
         // Creating timers for every member
-        for index in studyTimers!.indices {
-            studyTimers![index] = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(incrementStudyTime), userInfo: index, repeats: true)
-        }
+        studyTimers = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(incrementStudyTime), userInfo: nil, repeats: true)
+//        for index in studyTimers!.indices {
+//            studyTimers![index] = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(incrementStudyTime), userInfo: index, repeats: true)
+//        }
     }
     
     // Called after a non-host leaves, allowing other devices to clean up variables corresponding to that left member
@@ -96,8 +94,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         indexDict = Dictionary(uniqueKeysWithValues: zip(members!, Array(0...members!.count-1)))
         slackTimes!.remove(at: index)
         studyTimes!.remove(at: index)
-        studyTimers![index].invalidate()
-        studyTimers!.remove(at: index)
+//        studyTimers![index].invalidate()
+        studyTimers!.invalidate()
+//        studyTimers!.remove(at: index)
         leaveDates!.remove(at: index)
         otherDeviceStatus!.remove(at: index)
     }
@@ -107,10 +106,13 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     // TODO: Stopping a little slow
     // Called every second by studyTimers to increment a member's study time
     @objc func incrementStudyTime(timer:Timer) -> Void {
-        if ((timer.userInfo as! Int) == 1) {
-            print("Timer is incrementing properly!")
+        // TODO: Now updates study time of everyone (does not need index arg); additionally computes slack times real time if device is away
+        for i in 0...otherDeviceStatus!.endIndex-1 {
+            if otherDeviceStatus![i] == true {
+                studyTimes![i] = (Date() - joinTimes![i]) - slackTimes![i]
+            }
         }
-        studyTimes![timer.userInfo as! Int] += 1.0
+        
         membersTableView.reloadData()
     }
 
@@ -139,16 +141,16 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     @objc func updateSlackTime(timePassed: Double, index: Int) -> Void {
         slackTimes![index] += timePassed
 //        membersTableView.reloadData()
-        if index == 0 {
-            // TODO: Have to check to update other timers if they are still studying; true (apps still on) + timePassed to their studytimes
-            if otherDeviceStatus!.count > 1 {
-                for i in 1...otherDeviceStatus!.endIndex-1 {
-                    if otherDeviceStatus![i] == true {
-                        studyTimes![i] += timePassed
-                    }
-                }
-            }
-        }
+//        if index == 0 {
+//            // TODO: Have to check to update other timers if they are still studying; true (apps still on) + timePassed to their studytimes
+//            if otherDeviceStatus!.count > 1 {
+//                for i in 1...otherDeviceStatus!.endIndex-1 {
+//                    if otherDeviceStatus![i] == true {
+//                        studyTimes![i] += timePassed
+//                    }
+//                }
+//            }
+//        }
         DispatchQueue.main.async {
             self.membersTableView.reloadData()
         }
@@ -163,15 +165,15 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         otherDeviceStatus![index] = value
         if value == false {
             leaveDates![index] = Date()
-            studyTimers![index].invalidate()
+//            studyTimers![index].invalidate()
         } else {
             print("\(value), \(index)")
             let difference = Calendar.current.dateComponents([.second], from: leaveDates![index], to: Date())
             updateSlackTime(timePassed: Double(difference.second!), index: index)
-            DispatchQueue.main.async {
-                self.studyTimers![index] = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.incrementStudyTime), userInfo: index, repeats: true)
-            }
-            print("Timer rescheduled \(studyTimers![index])")
+//            DispatchQueue.main.async {
+//                self.studyTimers![index] = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.incrementStudyTime), userInfo: index, repeats: true)
+//            }
+//            print("Timer rescheduled \(studyTimers![index])")
         }
     }
 
@@ -195,9 +197,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         print("leave pressed \(Date.now)")
         generalTimer.invalidate()
         
-        for studyTimer in studyTimers! {
-            studyTimer.invalidate()
-        }
+        studyTimers!.invalidate()
+//        for studyTimer in studyTimers! {
+//            studyTimer.invalidate()
+//        }
         
         members = nil // List of group member names
         studyTimers = nil // TODO: Might be able to, in the future, not have individual timers but just stop incrementing individuals studyTimes when off; or keep track of initial room join time and calculate studyTimes with (current time - join time) - total slack time

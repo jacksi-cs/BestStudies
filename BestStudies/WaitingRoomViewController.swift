@@ -61,10 +61,10 @@ extension WaitingRoomViewController: UITableViewDelegate, UITableViewDataSource 
         if segue.identifier == "SessionSegueIdentifier" {
             let destVC = segue.destination as! SessionViewController
             destVC.isStopwatch = connectionManager?.isStopwatch
-            print("ISSA KNIFE: \(connectionManager!.remainingTime)")
             destVC.totalTime = connectionManager?.remainingTime
             destVC.connectionManager = self.connectionManager
             destVC.sessionStartTime = Date()
+            destVC.joinTimes = Array(repeating: Date(), count: connectionManager?.connectedPeers.count ?? 1)
         }
     }
 }

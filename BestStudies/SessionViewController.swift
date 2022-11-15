@@ -17,6 +17,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var membersTableView: UITableView!
 
     var members:[MCPeerID]? // List of group member names
+    
+    var joinTimes:[Date]?
     var studyTimers:[Timer]? // TODO: Might be able to, in the future, not have individual timers but just stop incrementing individuals studyTimes when off; or keep track of initial room join time and calculate studyTimes with (current time - join time) - total slack time
     var studyTimes:[TimeInterval]? // List of each group member's total study time
     var slackTimes:[TimeInterval]? // List of each group member's total slacking time
@@ -26,11 +28,12 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     var comeBackObserver:NSObjectProtocol?
 
     var isStopwatch:Bool?
-    var remainingTime:TimeInterval? // Decrements from total session time or does not show
+    var totalTime:TimeInterval!
+//    var remainingTime:TimeInterval? // Decrements from total session time or does not show
     var elapsedTime:TimeInterval = 0.0 // Increments from 0
     var sessionStartTime:Date!
 
-    var generalTime:Timer = Timer()
+    var generalTimer:Timer = Timer()
 
     var timeFormatter = DateComponentsFormatter()
     
@@ -79,7 +82,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
 //            updateGeneralTime(timePassed: Double(difference.second!))
         }
         
-        generalTime = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(incrementGeneralTime), userInfo: nil, repeats: true)
+        generalTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(incrementGeneralTime), userInfo: nil, repeats: true)
         
         // Creating timers for every member
         for index in studyTimers!.indices {
@@ -113,12 +116,13 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     // Called every second by generalTimer to update the general remaining (if timer) and elapsed times
     @objc func incrementGeneralTime() -> Void {
-        if !(isStopwatch!) {
-            remainingTime! -= 1.0
-             self.totalTimeRemainingLabel.text = timeFormatter.string(from: remainingTime!)
-        }
         elapsedTime = Date() - self.sessionStartTime
-        self.totalTimeElapsedLabel.text =  timeFormatter.string(from: elapsedTime)
+        self.totalTimeElapsedLabel.text =  timeFormatter.string(from: elapsedTime.rounded())
+        
+        if !(isStopwatch!) {
+            let remainingTime = totalTime - elapsedTime
+            self.totalTimeRemainingLabel.text = timeFormatter.string(from: remainingTime.rounded())
+        }
     }
 
     // Called after exiting and reentering the app to update the general remaining (if timer) and elapsed times
@@ -151,6 +155,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     // TODO: Change status of device --> false = change leave date and pause timer, true = calculate time passed and update slacktime start up timer
+    // Called from Connection Manager when host determines session settings and must communicate it to other devices
     func updateOtherDeviceStatus(index: Int, value: Bool) {
         if (otherDeviceStatus![index] != !value) {
             print("BIG TROUBLE UH OH")
@@ -188,7 +193,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         NotificationCenter.default.removeObserver(comeBackObserver!, name: UIApplication.willEnterForegroundNotification, object: nil)
         
         print("leave pressed \(Date.now)")
-        generalTime.invalidate()
+        generalTimer.invalidate()
         
         for studyTimer in studyTimers! {
             studyTimer.invalidate()

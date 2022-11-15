@@ -9,6 +9,7 @@
 
 import UIKit
 import MultipeerConnectivity
+import AVFoundation
 
 class SessionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -22,6 +23,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     var studyTimers:Timer? // TODO: Might be able to, in the future, not have individual timers but just stop incrementing individuals studyTimes when off; or keep track of initial room join time and calculate studyTimes with (current time - join time) - total slack time
     var studyTimes:[TimeInterval]? // List of each group member's total study time
     var slackTimes:[TimeInterval]? // List of each group member's total slacking time
+    var prevSlackTimes:[TimeInterval]?
     var leaveDates:[Date]? // List of each group member's latest 'left the app' time, used to calculate slack times
     
     var leaveObserver:NSObjectProtocol?
@@ -56,6 +58,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         members = connectionManager?.connectedPeers
         indexDict = Dictionary(uniqueKeysWithValues: zip(members!, Array(0...members!.count-1)))
         slackTimes = Array(repeating: 0.0, count: connectionManager?.connectedPeers.count ?? 1)
+        prevSlackTimes = Array(repeating: 0.0, count: connectionManager?.connectedPeers.count ?? 1)
         studyTimes = Array(repeating: 0.0, count: connectionManager?.connectedPeers.count ?? 1)
 //        studyTimers = Array(repeating: Timer(), count: connectionManager?.connectedPeers.count ?? 1)
         leaveDates = Array(repeating: Date(), count: connectionManager?.connectedPeers.count ?? 1)
@@ -66,6 +69,18 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         timeFormatter.allowedUnits = [.hour, .minute, .second]
         
         leaveObserver = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) { [self](notification) in
+            
+            let session = AVAudioSession.sharedInstance()
+                    do {
+                        try session.setCategory(AVAudioSession.Category.playback,
+                                                mode: AVAudioSession.Mode.default,
+                                                options: [AVAudioSession.CategoryOptions.mixWithOthers])
+                        try session.setPrefersNoInterruptionsFromSystemAlerts(true)
+                        try session.setActive(true)
+                    } catch let error as NSError {
+                        print("Failed to set the audio session category and mode: \(error.localizedDescription)")
+                    }
+            
             print("\(self.leaveDates!) \(Thread.current) left in background")
             self.otherDeviceStatus![0] = false
             self.connectionManager?.send(message: "False")
@@ -95,7 +110,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         slackTimes!.remove(at: index)
         studyTimes!.remove(at: index)
 //        studyTimers![index].invalidate()
-        studyTimers!.invalidate()
+//        studyTimers!.invalidate()
 //        studyTimers!.remove(at: index)
         leaveDates!.remove(at: index)
         otherDeviceStatus!.remove(at: index)
@@ -110,6 +125,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         for i in 0...otherDeviceStatus!.endIndex-1 {
             if otherDeviceStatus![i] == true {
                 studyTimes![i] = (Date() - joinTimes![i]) - slackTimes![i]
+            } else if otherDeviceStatus![i] == false {
+                slackTimes![i] = prevSlackTimes![i] + (Date() - leaveDates![i])
             }
         }
         
@@ -139,7 +156,9 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     // Called after exiting and reentering the app to update a member's slack time
     @objc func updateSlackTime(timePassed: Double, index: Int) -> Void {
-        slackTimes![index] += timePassed
+        print("index: \(index), prevSlackTime: \(prevSlackTimes![index]), slackTime: \(timePassed)")
+        prevSlackTimes![index] += timePassed
+        slackTimes![index] = prevSlackTimes![index]
 //        membersTableView.reloadData()
 //        if index == 0 {
 //            // TODO: Have to check to update other timers if they are still studying; true (apps still on) + timePassed to their studytimes
@@ -162,14 +181,21 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         if (otherDeviceStatus![index] != !value) {
             print("BIG TROUBLE UH OH")
         }
+        
         otherDeviceStatus![index] = value
+        print("\(index), \(value)")
+        
         if value == false {
             leaveDates![index] = Date()
 //            studyTimers![index].invalidate()
-        } else {
+        } else if value {
             print("\(value), \(index)")
+            
+            // TODO: IMPORTANT THINGS COMMENTED OUT, TRYING TO UPDATE OTHER DEVICE SLACK TIMES THROUGH INCREMENT STUDY TIME FUNCTION
             let difference = Calendar.current.dateComponents([.second], from: leaveDates![index], to: Date())
             updateSlackTime(timePassed: Double(difference.second!), index: index)
+            
+            
 //            DispatchQueue.main.async {
 //                self.studyTimers![index] = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.incrementStudyTime), userInfo: index, repeats: true)
 //            }

@@ -16,22 +16,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="BestStudies" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KYi-hL-AHm">
-                                <rect key="frame" x="0.0" y="307" width="374" height="101"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="46"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </label>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="YL3-Ua-yz8">
                                 <rect key="frame" x="16" y="420" width="358" height="4"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" systemColor="systemGreenColor"/>
                             </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BestStudies" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KYi-hL-AHm">
+                                <rect key="frame" x="50.333333333333343" y="311" width="292.66666666666663" height="59.333333333333314"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="46"/>
+                                <color key="textColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="3lM-nY-jkz"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="KYi-hL-AHm" firstAttribute="top" secondItem="3lM-nY-jkz" secondAttribute="top" constant="252" id="acH-nJ-rTb"/>
+                            <constraint firstItem="KYi-hL-AHm" firstAttribute="centerX" secondItem="aWt-cd-qQy" secondAttribute="centerX" id="xAh-or-uLJ"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="progressBar" destination="YL3-Ua-yz8" id="iH9-S4-OGa"/>
@@ -254,20 +257,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgR-7K-pmb">
-                                <rect key="frame" x="99" y="202" width="195" height="44"/>
+                                <rect key="frame" x="54" y="202" width="285.33333333333331" height="49.666666666666657"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Create a Session">
-                                    <fontDescription key="titleFontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="24"/>
+                                    <fontDescription key="titleFontDescription" name="Chalkduster" family="Chalkduster" pointSize="28"/>
+                                    <color key="baseForegroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="createButtonPressed:" destination="DgU-F8-s0g" eventType="touchUpInside" id="p27-zT-W40"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="11w-y1-GGY">
-                                <rect key="frame" x="110.33333333333333" y="299" width="172.66666666666669" height="44"/>
+                                <rect key="frame" x="70.666666666666671" y="304.66666666666669" width="251.66666666666663" height="49"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Join a Session">
-                                    <fontDescription key="titleFontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="24"/>
+                                    <fontDescription key="titleFontDescription" name="Chalkduster" family="Chalkduster" pointSize="28"/>
+                                    <color key="baseForegroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="joinButtonPressed:" destination="DgU-F8-s0g" eventType="touchUpInside" id="WZ4-6I-SGg"/>
@@ -276,7 +281,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="85S-yF-GNb">
                                 <rect key="frame" x="171.66666666666666" y="415" width="50" height="35"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="questionmark.circle" catalog="system"/>
+                                <buttonConfiguration key="configuration" style="plain" image="questionmark.circle" catalog="system">
+                                    <color key="baseForegroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="helpButtonPressed:" destination="DgU-F8-s0g" eventType="touchUpInside" id="7pG-dm-ePh"/>
                                 </connections>
@@ -295,6 +302,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="Ready to Study?" id="jZi-XR-QBS"/>
                     <connections>
+                        <outlet property="createSession" destination="pgR-7K-pmb" id="7jT-j9-Eii"/>
+                        <outlet property="joinSession" destination="11w-y1-GGY" id="vI4-3J-9Wf"/>
                         <segue destination="NM6-of-M4B" kind="presentation" identifier="WaitingRoomSegueIdentifier1" modalPresentationStyle="fullScreen" id="Sw8-ep-ACZ"/>
                         <segue destination="csa-88-462" kind="show" identifier="CreateSessionSegueIdentifier" id="F9O-8b-SBd"/>
                     </connections>
@@ -313,6 +322,7 @@
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Vfa-3T-378">
                                 <rect key="frame" x="71.666666666666686" y="153" width="250" height="32"/>
+                                <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="Du2-pu-MwA"/>
                                 </constraints>
@@ -325,10 +335,11 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eup-Mo-Nzb">
-                                <rect key="frame" x="130.66666666666666" y="459" width="131.99999999999997" height="35.333333333333314"/>
+                                <rect key="frame" x="115.33333333333333" y="459" width="162.66666666666669" height="35.333333333333314"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Create Session">
-                                    <fontDescription key="titleFontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="17"/>
+                                    <fontDescription key="titleFontDescription" name="Chalkduster" family="Chalkduster" pointSize="17"/>
+                                    <color key="baseForegroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="createSessionPressed:" destination="csa-88-462" eventType="touchUpInside" id="oV5-Uh-03F"/>
@@ -344,7 +355,7 @@
                             </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="U2B-sG-9kg"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Vfa-3T-378" firstAttribute="top" secondItem="U2B-sG-9kg" secondAttribute="top" constant="50" id="6Qq-pc-rHt"/>
                             <constraint firstItem="Vfa-3T-378" firstAttribute="centerX" secondItem="Rk8-HJ-8de" secondAttribute="centerX" id="D2m-ub-mC5"/>
@@ -402,7 +413,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="s2D-Jg-xJV">
-                                                    <rect key="frame" x="5" y="11.000000000000007" width="340" height="20.333333333333336"/>
+                                                    <rect key="frame" x="5" y="11.000000000000007" width="340" height="20.333333333333332"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jhy-g0-Kg3">
                                                             <rect key="frame" x="0.0" y="0.0" width="100" height="20.333333333333332"/>
@@ -523,7 +534,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="j9z-CR-ykY">
                                                     <rect key="frame" x="20" y="0.0" width="321" height="72"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="28"/>
+                                                    <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="28"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -568,7 +579,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aEe-Um-NUt">
                                                     <rect key="frame" x="20" y="0.0" width="321" height="52"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -594,7 +605,7 @@
         <scene sceneID="1ed-Xv-G7x">
             <objects>
                 <viewController id="Y34-hg-bcg" customClass="SettingsViewController" customModule="BestStudies" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="bgj-0j-HgE">
+                    <view key="view" contentMode="scaleToFill" id="bgj-0j-HgE">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -612,7 +623,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2fd-Ym-lLJ">
                                                     <rect key="frame" x="20" y="0.0" width="353" height="45.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -772,14 +783,17 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Sw8-ep-ACZ"/>
-        <segue reference="mbf-fZ-Qwa"/>
+        <segue reference="gjT-A1-0AH"/>
+        <segue reference="BDt-rm-OnH"/>
         <segue reference="PLb-2W-JMt"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="questionmark.circle" catalog="system" width="128" height="123"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemGroupedBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

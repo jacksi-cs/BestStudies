@@ -16,10 +16,17 @@ class LoadingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        // self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
+        
         
     }
     override func viewDidAppear(_ animated: Bool) {
+        ///
+        for _ in 1...3 {
+            sleep(1)
+        }
+        ///
         animateProgress()
         Auth.auth().addStateDidChangeListener() { [weak self]
             auth, user in

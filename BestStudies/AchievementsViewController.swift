@@ -19,7 +19,7 @@ class AchievementsViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
 
         // Do any additional setup after loading the view.
         achieveTableView.delegate = self

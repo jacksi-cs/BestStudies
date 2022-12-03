@@ -11,10 +11,26 @@ class HomeViewController: UIViewController {
     
     var connectionManager:ConnectionManager = ConnectionManager()
     
+    @IBOutlet weak var createSession: UIButton!
+    @IBOutlet weak var joinSession: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
-
+        // self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 20)!]
+        
+//        createSession.titleLabel?.font = UIFont(name: "Chalkduster", size: 30)
+//        createSession.setTitleColor(UIColor.white, for: .normal)
+//        
+//        joinSession.titleLabel?.font = UIFont(name: "Chalkduster", size: 30)
+//        joinSession.setTitleColor(UIColor.white, for: .normal)
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.isTranslucent = true
+//        self.navigationController?.view.backgroundColor = .clear
+        
         connectionManager.homeViewController = self
         
         // Do any additional setup after loading the view.

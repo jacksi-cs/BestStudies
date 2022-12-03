@@ -46,7 +46,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        // self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
         
         connectionManager?.sessionViewController = self
 

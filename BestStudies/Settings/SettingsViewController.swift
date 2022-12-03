@@ -71,8 +71,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
-        self.settingsTable.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        // self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
+        // self.settingsTable.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        self.settingsTable.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
         userNameLabel!.text = AuthManager.shared.getCurrentUser()
         emailLabel!.text = AuthManager.shared.getCurrentEmail()
         soundOnSwitch!.isOn = UserDefaults.standard.bool(forKey: "soundOn")

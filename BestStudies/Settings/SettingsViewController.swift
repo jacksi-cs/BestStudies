@@ -51,6 +51,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         settingsTable.delegate = self
         settingsTable.dataSource = self
         
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 20)!]
+        
         emailLabel = UILabel(frame: CGRectMake(140.0, 0.0, 240.0, 42.8))
         changeEmailButton = UIButton(frame: CGRectMake(0, 0, 393.0, 42.8))
         
@@ -60,10 +62,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         changePasswordButton = UIButton(frame: CGRectMake(0, 0, 393.0, 43.2))
         
         soundOnSwitch = UISwitch(frame: CGRectMake(330, 7.0, 240.0, 42.8))
+        soundOnSwitch?.thumbTintColor = UIColor(patternImage: UIImage(named: "chalk_texture.jpeg")!)
+        soundOnSwitch?.onTintColor = UIColor(white: 0.5, alpha: 0.5)
         
         soundSlider = UISlider(frame: CGRectMake(170.0, 1.0, 210.0, 42.8))
+        soundSlider?.thumbTintColor = UIColor(patternImage: UIImage(named: "chalk_texture.jpeg")!)
         
         notificationOnSwitch = UISwitch(frame: CGRectMake(330, 7.0, 240.0, 42.8))
+        notificationOnSwitch?.thumbTintColor = UIColor(patternImage: UIImage(named: "chalk_texture.jpeg")!)
+        notificationOnSwitch?.onTintColor = UIColor(white: 0.5, alpha: 0.5)
         
         logoutButton = UIButton(frame: CGRectMake(0, 0, 393.0, 42.8))
         
@@ -71,14 +78,19 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        print("asdfasdf")
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
-        // self.settingsTable.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
-        self.settingsTable.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
+        self.settingsTable.backgroundColor = .clear
+        
         userNameLabel!.text = AuthManager.shared.getCurrentUser()
         emailLabel!.text = AuthManager.shared.getCurrentEmail()
+        
+        // TODO: Slider color is only changing after the second call to function
+        soundSlider!.minimumTrackTintColor = UIColor(white: 0.5, alpha: 0.5)
+        soundSlider!.maximumTrackTintColor = .clear
         soundOnSwitch!.isOn = UserDefaults.standard.bool(forKey: "soundOn")
         soundSlider!.value = UserDefaults.standard.float(forKey: "soundVolume")
+        
         notificationOnSwitch!.isOn = UserDefaults.standard.bool(forKey: "notificationsOn")
     }
     
@@ -90,7 +102,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath)
         let row = indexPath.row
         cell.textLabel?.text = settings[row]
-        cell.backgroundColor = .white
+        cell.textLabel?.font = UIFont(name: "Chalkduster", size: 20)
+        cell.textLabel?.textColor = .white
+        cell.backgroundColor = .clear
         switch indexPath.row {
         case 0:
             
@@ -99,6 +113,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             emailLabel!.text = currentEmail
             emailLabel!.textAlignment = NSTextAlignment.right
             emailLabel!.textColor = .systemGray
+            emailLabel!.font = UIFont(name: "Chalkduster", size: 15)
             emailLabel!.tag = indexPath.row
             
             // Set up a button since didSelectRowAt will not work for varried cell types
@@ -112,6 +127,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             userNameLabel!.text = currentUserName
             userNameLabel!.textAlignment = NSTextAlignment.right
             userNameLabel!.textColor = .systemGray
+            userNameLabel!.font = UIFont(name: "Chalkduster", size: 15)
             userNameLabel!.tag = indexPath.row
             
             changeUserNameButton!.addTarget(self, action: #selector(changeUserNameButtonPressed), for: .touchUpInside)

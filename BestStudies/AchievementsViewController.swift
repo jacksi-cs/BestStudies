@@ -32,6 +32,7 @@ class AchievementsViewController: UIViewController, UITableViewDelegate, UITable
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         user = DatabaseManager.shared.getCache()
+        achieveTableView.reloadData()
         
     }
     
@@ -51,11 +52,11 @@ class AchievementsViewController: UIViewController, UITableViewDelegate, UITable
                 cell.textLabel?.textColor = .green
             }
         case 1:
-            if user!.topStudyTime >= 30 {
+            if user!.userDict.count >= 1 {
                 cell.textLabel?.textColor = .green
             }
         case 2:
-            if user!.userDict.count >= 1 {
+            if user!.topStudyTime >= 30 {
                 cell.textLabel?.textColor = .green
             }
         default:

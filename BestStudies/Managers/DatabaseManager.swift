@@ -4,7 +4,6 @@
 
 
 import Foundation
-import FirebaseFirestoreSwift
 import FirebaseFirestore
 
 final class DatabaseManager {

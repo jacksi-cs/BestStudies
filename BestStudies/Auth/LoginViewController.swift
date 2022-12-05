@@ -17,7 +17,7 @@ class LoginViewController: UIViewController {
                 // Do any additional setup after loading the view.
         passwordField.isSecureTextEntry = true
         passwordField.addTarget(self, action: #selector(signinButton), for: UIControl.Event.primaryActionTriggered)
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.png")!)
         Auth.auth().addStateDidChangeListener() { [weak self]
             auth, user in
             if user != nil {

@@ -387,14 +387,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Initial 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXx-h4-wUH">
-                                <rect key="frame" x="170.66666666666666" y="129" width="51.666666666666657" height="20.333333333333343"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Elapsed: 0h 0m 0s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXx-h4-wUH">
+                                <rect key="frame" x="126.00000000000001" y="109" width="141.33333333333337" height="20.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Initial 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGm-Tq-StW">
-                                <rect key="frame" x="169.66666666666666" y="171.33333333333334" width="54" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remaining: 0h 0m 0s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGm-Tq-StW">
+                                <rect key="frame" x="116.33333333333333" y="149.33333333333334" width="160.66666666666669" height="43"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -470,10 +470,10 @@
                         <constraints>
                             <constraint firstItem="Nky-gR-Vz7" firstAttribute="bottom" secondItem="eU5-id-fF8" secondAttribute="bottom" constant="79" id="CNn-YG-bdR"/>
                             <constraint firstItem="eU5-id-fF8" firstAttribute="centerX" secondItem="ZAj-cs-3uT" secondAttribute="centerX" id="Q38-5C-Q7d"/>
-                            <constraint firstItem="hea-PQ-OWG" firstAttribute="top" secondItem="zXx-h4-wUH" secondAttribute="bottom" constant="50" id="Swa-8p-D5Q"/>
+                            <constraint firstItem="hea-PQ-OWG" firstAttribute="top" secondItem="zXx-h4-wUH" secondAttribute="bottom" constant="70" id="Swa-8p-D5Q"/>
                             <constraint firstItem="hea-PQ-OWG" firstAttribute="top" secondItem="IGm-Tq-StW" secondAttribute="bottom" constant="7" id="UV2-2p-yAW"/>
-                            <constraint firstItem="IGm-Tq-StW" firstAttribute="top" secondItem="zXx-h4-wUH" secondAttribute="bottom" constant="22" id="YHm-Vn-59F"/>
-                            <constraint firstItem="zXx-h4-wUH" firstAttribute="top" secondItem="Nky-gR-Vz7" secondAttribute="top" constant="70" id="cWE-uY-CPh"/>
+                            <constraint firstItem="IGm-Tq-StW" firstAttribute="top" secondItem="zXx-h4-wUH" secondAttribute="bottom" constant="20" id="YHm-Vn-59F"/>
+                            <constraint firstItem="zXx-h4-wUH" firstAttribute="top" secondItem="Nky-gR-Vz7" secondAttribute="top" constant="50" id="cWE-uY-CPh"/>
                             <constraint firstItem="zXx-h4-wUH" firstAttribute="centerX" secondItem="ZAj-cs-3uT" secondAttribute="centerX" id="dPM-Vb-gEb"/>
                             <constraint firstItem="hea-PQ-OWG" firstAttribute="centerX" secondItem="ZAj-cs-3uT" secondAttribute="centerX" id="ech-Q3-Tv2"/>
                             <constraint firstItem="IGm-Tq-StW" firstAttribute="centerX" secondItem="ZAj-cs-3uT" secondAttribute="centerX" id="m55-45-rto"/>

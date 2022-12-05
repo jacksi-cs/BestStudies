@@ -45,6 +45,12 @@ class RegisterViewController: UIViewController {
             AuthManager.shared.signUp(email: emailField.text!, userName: userField.text!, password: passwordField.text!, errorLabel: errorLabel) {
                 [weak self] success in
                 guard success else {
+                    DatabaseManager.shared.createStats {
+                        [weak self] success in
+                        guard success else {
+                            return
+                        }
+                    }
                     UserDefaults.standard.set(true, forKey: "soundOn")
                     UserDefaults.standard.set(0.5, forKey: "soundVolume")
                     UserDefaults.standard.set(false, forKey: "notificationsOn")

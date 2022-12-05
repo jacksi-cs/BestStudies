@@ -16,6 +16,32 @@ final class DatabaseManager {
         //user = UserStats(studyTime: 0, slackTime: 0, totalSessions: 0, topStudyTime: 0, worstSlackTime: 0, topBuddy: "", userDict: [:])
     }
     
+    public func createStats(
+        completion: @escaping (Bool) -> Void
+    ) {
+        let documentId = AuthManager.shared.getCurrentEmail()
+            .replacingOccurrences(of: ".", with: "_")
+            .replacingOccurrences(of: "@", with: "_")
+        
+        let data: [String: Any] = [
+            "studyTime": 0.0,
+            "slackTime": 0.0,
+            "totalSessions" : 0,
+            "topStudyTime" : 0.0,
+            "worstSlackTime" : 0.0,
+            "topBuddy" : "No buddies yet!",
+            "topBuddySessions" : 0,
+            "otherUsers": [:]
+        ]
+        
+        database
+            .collection("userStats")
+            .document(documentId)
+            .setData(data) { error in
+                completion(error == nil)
+            }
+    }
+    
     public func setStats(
         completion: @escaping (Bool) -> Void
     ) {
@@ -30,6 +56,7 @@ final class DatabaseManager {
             "topStudyTime" : user.topStudyTime,
             "worstSlackTime" : user.worstSlackTime,
             "topBuddy" : user.topBuddy,
+            "topBuddySessions" : user.topBuddySessions,
             "otherUsers": user.userDict
         ]
         
@@ -59,13 +86,14 @@ final class DatabaseManager {
                       let topStudyTime = data["topStudyTime"],
                       let worstSlackTime = data["worstSlackTime"],
                       let topBuddy = data["topBuddy"],
+                      let topBuddySessions = data["topBuddySessions"],
                       let userDict = data["otherUsers"],
                       error == nil else {
                     print("ERROR")
                     completion(false)
                     return
                 }
-                user.setStats(studyTime: studyTime as! TimeInterval, slackTime: slackTime as! TimeInterval, totalSessions: totalSessions as! Int, topStudyTime: topStudyTime as! TimeInterval, worstSlackTime: worstSlackTime as! TimeInterval, topBuddy: topBuddy as! String, userDict: userDict as! Dictionary<String, Int>)
+                user.setStats(studyTime: studyTime as! TimeInterval, slackTime: slackTime as! TimeInterval, totalSessions: totalSessions as! Int, topStudyTime: topStudyTime as! TimeInterval, worstSlackTime: worstSlackTime as! TimeInterval, topBuddy: topBuddy as! String, topBuddySessions: topBuddySessions as! Int, userDict: userDict as! Dictionary<String, Int>)
                 
                 completion(true)
             }
@@ -77,6 +105,7 @@ final class DatabaseManager {
     }
     
     public func updateStats(studyTime: TimeInterval, slackTime: TimeInterval, names: Array<String>) -> Void {
+        print(names)
         user.updateStats(studyTime: studyTime, slackTime: slackTime, names: names)
     }
 }

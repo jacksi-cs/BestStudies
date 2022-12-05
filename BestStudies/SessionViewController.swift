@@ -29,6 +29,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var leaveObserver:NSObjectProtocol?
     var comeBackObserver:NSObjectProtocol?
+    var nameArray: Array<String> = []
 
     var isStopwatch:Bool?
     var totalTime:TimeInterval!
@@ -218,6 +219,10 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cell = membersTableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath) as! MemberTableViewCell
         let row = indexPath.row
         cell.nameLabel?.text = members![row].displayName
+        if members![row].displayName != AuthManager.shared.getCurrentUser() {
+            nameArray.append(members![row].displayName)
+        }
+        
         cell.slackLabel?.text = timeFormatter.string(from: slackTimes![row])
         cell.studyLabel?.text = timeFormatter.string(from: studyTimes![row])
         cell.backgroundColor = .clear
@@ -235,11 +240,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
 //        for studyTimer in studyTimers! {
 //            studyTimer.invalidate()
 //        }
-        var nameArray: [String]
-        nameArray = []
-        for member in members! {
-            nameArray.append(member.displayName)
-        }
         DatabaseManager.shared.updateStats(studyTime: studyTimes![0], slackTime: slackTimes![0], names: nameArray)
         members = nil // List of group member names
         studyTimers = nil // TODO: Might be able to, in the future, not have individual timers but just stop incrementing individuals studyTimes when off; or keep track of initial room join time and calculate studyTimes with (current time - join time) - total slack time

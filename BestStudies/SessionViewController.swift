@@ -51,7 +51,17 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         membersTableView.delegate = self
         membersTableView.dataSource = self
+        
+        totalTimeElapsedLabel.font = UIFont(name: "Chalkduster", size: 20)
+        totalTimeElapsedLabel.textColor = .white
 
+        if !isStopwatch! {
+            totalTimeRemainingLabel.isHidden = false
+            totalTimeRemainingLabel.font = UIFont(name: "Chalkduster", size: 20)
+            totalTimeRemainingLabel.textColor = .white
+        } else {
+            totalTimeRemainingLabel.isHidden = true
+        }
         
         // TODO: Add semaphore for shared variables for threadsafe capabilities
         members = connectionManager?.connectedPeers
@@ -139,11 +149,11 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     // Called every second by generalTimer to update the general remaining (if timer) and elapsed times
     @objc func incrementGeneralTime() -> Void {
         elapsedTime = Date() - self.sessionStartTime
-        self.totalTimeElapsedLabel.text =  timeFormatter.string(from: elapsedTime.rounded())
+        self.totalTimeElapsedLabel.text = "Elapsed:  \(timeFormatter.string(from: elapsedTime.rounded())!)"
         
         if !(isStopwatch!) {
             let remainingTime = totalTime - elapsedTime
-            self.totalTimeRemainingLabel.text = timeFormatter.string(from: remainingTime.rounded())
+            self.totalTimeRemainingLabel.text = "Remaining:  \(timeFormatter.string(from: remainingTime.rounded())!)"
         }
     }
 
@@ -197,12 +207,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
             // TODO: IMPORTANT THINGS COMMENTED OUT, TRYING TO UPDATE OTHER DEVICE SLACK TIMES THROUGH INCREMENT STUDY TIME FUNCTION
             let difference = Calendar.current.dateComponents([.second], from: leaveDates![index], to: Date())
             updateSlackTime(timePassed: Double(difference.second!), index: index)
-            
-            
-//            DispatchQueue.main.async {
-//                self.studyTimers![index] = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.incrementStudyTime), userInfo: index, repeats: true)
-//            }
-//            print("Timer rescheduled \(studyTimers![index])")
         }
     }
 

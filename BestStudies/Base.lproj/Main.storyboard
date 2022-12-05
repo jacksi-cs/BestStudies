@@ -321,7 +321,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Vfa-3T-378">
-                                <rect key="frame" x="71.666666666666686" y="153" width="250" height="32"/>
+                                <rect key="frame" x="71.666666666666686" y="143" width="250" height="32"/>
                                 <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="Du2-pu-MwA"/>
@@ -335,7 +335,7 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eup-Mo-Nzb">
-                                <rect key="frame" x="115.33333333333333" y="459" width="162.66666666666669" height="35.333333333333314"/>
+                                <rect key="frame" x="115.33333333333333" y="449" width="162.66666666666669" height="35.333333333333314"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Create Session">
                                     <fontDescription key="titleFontDescription" name="Chalkduster" family="Chalkduster" pointSize="17"/>
@@ -345,23 +345,25 @@
                                     <action selector="createSessionPressed:" destination="csa-88-462" eventType="touchUpInside" id="oV5-Uh-03F"/>
                                 </connections>
                             </button>
-                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0h 30m" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Yz-LA-aga">
-                                <rect key="frame" x="109" y="228" width="175" height="34"/>
+                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Time: 0h 30m" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Yz-LA-aga">
+                                <rect key="frame" x="71.666666666666686" y="209" width="250" height="35"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="175" id="1cN-Sx-b9l"/>
+                                    <constraint firstAttribute="width" constant="250" id="1cN-Sx-b9l"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="U2B-sG-9kg"/>
                         <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Vfa-3T-378" firstAttribute="top" secondItem="U2B-sG-9kg" secondAttribute="top" constant="50" id="6Qq-pc-rHt"/>
+                            <constraint firstItem="Vfa-3T-378" firstAttribute="top" secondItem="U2B-sG-9kg" secondAttribute="top" constant="40" id="6Qq-pc-rHt"/>
                             <constraint firstItem="Vfa-3T-378" firstAttribute="centerX" secondItem="Rk8-HJ-8de" secondAttribute="centerX" id="D2m-ub-mC5"/>
                             <constraint firstItem="3Yz-LA-aga" firstAttribute="centerX" secondItem="Rk8-HJ-8de" secondAttribute="centerX" id="D7T-I0-Qk0"/>
                             <constraint firstItem="eup-Mo-Nzb" firstAttribute="centerX" secondItem="Rk8-HJ-8de" secondAttribute="centerX" id="QVI-YX-Igp"/>
-                            <constraint firstItem="3Yz-LA-aga" firstAttribute="top" secondItem="Vfa-3T-378" secondAttribute="bottom" constant="44" id="Uf7-0L-mls"/>
+                            <constraint firstItem="3Yz-LA-aga" firstAttribute="top" secondItem="Vfa-3T-378" secondAttribute="bottom" constant="35" id="Uf7-0L-mls"/>
                             <constraint firstItem="eup-Mo-Nzb" firstAttribute="top" secondItem="Vfa-3T-378" secondAttribute="bottom" constant="275" id="jFa-PP-l7W"/>
                         </constraints>
                     </view>
@@ -478,6 +480,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="leaveButton" destination="eU5-id-fF8" id="yW7-tA-kTF"/>
                         <outlet property="membersTableView" destination="hea-PQ-OWG" id="9Da-L5-rw9"/>
                         <outlet property="totalTimeElapsedLabel" destination="zXx-h4-wUH" id="j9p-Oj-hDu"/>
                         <outlet property="totalTimeRemainingLabel" destination="IGm-Tq-StW" id="cK6-rM-7Ka"/>
@@ -716,7 +719,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ip6-Dp-r5I">
-                                <rect key="frame" x="0.0" y="59" width="384" height="553"/>
+                                <rect key="frame" x="0.0" y="59" width="384" height="475"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell" textLabel="ZmP-fX-4cP" style="IBUITableViewCellStyleDefault" id="rH5-tK-Rka">
@@ -726,7 +729,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="384" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZmP-fX-4cP">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZmP-fX-4cP">
                                                     <rect key="frame" x="20" y="0.0" width="344" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
@@ -739,7 +742,8 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9my-dr-nSK">
-                                <rect key="frame" x="162" y="711" width="69" height="35"/>
+                                <rect key="frame" x="162" y="633" width="69" height="35"/>
+                                <color key="tintColor" systemColor="systemCyanColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Leave"/>
                                 <connections>
@@ -747,9 +751,10 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UG8-Th-PFI">
-                                <rect key="frame" x="134" y="637" width="125" height="35"/>
+                                <rect key="frame" x="129.33333333333331" y="559" width="134.33333333333331" height="35"/>
+                                <color key="tintColor" systemColor="systemCyanColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Start Session"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Start Sessionn"/>
                                 <connections>
                                     <action selector="startPressed:" destination="NM6-of-M4B" eventType="touchUpInside" id="l2F-rq-7Hv"/>
                                 </connections>
@@ -763,13 +768,14 @@
                             <constraint firstItem="ip6-Dp-r5I" firstAttribute="leading" secondItem="MaU-c6-Ep2" secondAttribute="leading" id="Kx2-bE-UAD"/>
                             <constraint firstItem="9my-dr-nSK" firstAttribute="centerX" secondItem="1WZ-cr-7zS" secondAttribute="centerX" id="Sfn-rL-j4I"/>
                             <constraint firstItem="UG8-Th-PFI" firstAttribute="centerX" secondItem="1WZ-cr-7zS" secondAttribute="centerX" id="Vsg-0o-rcJ"/>
-                            <constraint firstItem="MaU-c6-Ep2" firstAttribute="bottom" secondItem="9my-dr-nSK" secondAttribute="bottom" constant="72" id="lJH-xe-CiG"/>
+                            <constraint firstItem="MaU-c6-Ep2" firstAttribute="bottom" secondItem="9my-dr-nSK" secondAttribute="bottom" constant="150" id="lJH-xe-CiG"/>
                             <constraint firstItem="MaU-c6-Ep2" firstAttribute="trailing" secondItem="ip6-Dp-r5I" secondAttribute="trailing" constant="9" id="m4C-jj-1ho"/>
                             <constraint firstItem="9my-dr-nSK" firstAttribute="top" secondItem="UG8-Th-PFI" secondAttribute="bottom" constant="39" id="y1A-ei-uTX"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="syy-Ug-Q8b"/>
                     <connections>
+                        <outlet property="leaveButton" destination="9my-dr-nSK" id="C9b-qo-3X7"/>
                         <outlet property="membersTableView" destination="ip6-Dp-r5I" id="isC-Xm-HJu"/>
                         <outlet property="startButton" destination="UG8-Th-PFI" id="Jlg-Bj-wb0"/>
                         <segue destination="HG6-b3-VZN" kind="presentation" identifier="SessionSegueIdentifier" modalPresentationStyle="fullScreen" id="bVn-bR-LOY"/>
@@ -781,7 +787,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Sw8-ep-ACZ"/>
+        <segue reference="gjT-A1-0AH"/>
         <segue reference="BDt-rm-OnH"/>
         <segue reference="PLb-2W-JMt"/>
     </inferredMetricsTieBreakers>
@@ -795,6 +801,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemCyanColor">
+            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

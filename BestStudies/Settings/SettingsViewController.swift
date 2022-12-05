@@ -75,10 +75,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         logoutButton = UIButton(frame: CGRectMake(0, 0, 393.0, 42.8))
         
         deleteAccountButton = UIButton(frame: CGRectMake(0, 0, 393.0, 42.8))
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 20)!]
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("asdfasdf")
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
         self.settingsTable.backgroundColor = .clear
         

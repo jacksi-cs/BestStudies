@@ -12,7 +12,7 @@ import FirebaseAuth
 
 class ConnectionManager: NSObject {
     private static let service = "bs-session"
-    let myPeerId = MCPeerID(displayName: AuthManager.shared.getCurrentEmail())
+    let myPeerId = MCPeerID(displayName: AuthManager.shared.getCurrentUser())
 
     private var advertiserAssistant: MCNearbyServiceAdvertiser?
     private var session: MCSession?

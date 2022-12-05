@@ -14,6 +14,7 @@ class WaitingRoomViewController: UIViewController {
     @IBOutlet weak var membersTableView: UITableView!
     
     @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var leaveButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,16 @@ class WaitingRoomViewController: UIViewController {
         }
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
+        self.membersTableView.backgroundColor = .clear
+        let startButtonFont = NSAttributedString(string: "Start Session", attributes: [.foregroundColor: UIColor.cyan, NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 20)!])
+        let leaveButtonFont = NSAttributedString(string: "Leave", attributes: [.foregroundColor: UIColor.cyan, NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 20)!])
+       
+        self.startButton.setAttributedTitle(startButtonFont, for: .normal)
+        self.leaveButton.setAttributedTitle(leaveButtonFont, for: .normal)
     }
     
     @IBAction func startPressed(_ sender: Any) {
@@ -54,6 +65,9 @@ extension WaitingRoomViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath)
         cell.textLabel?.text = String(describing: connectionManager!.connectedPeers[indexPath.row].displayName)
+        cell.textLabel?.font = UIFont(name: "Chalkduster", size: 20)
+        cell.textLabel?.textColor = .white
+        cell.backgroundColor = .clear
         return cell
     }
     

@@ -28,6 +28,13 @@ class CreateSessionViewController: UIViewController {
         createTimePicker()
     }
     
+    override func viewWillAppear(_ animated: Bool) {        
+        sessionType.selectedSegmentTintColor = UIColor(white: 0.5, alpha: 0.5)
+        sessionType.backgroundColor = .clear
+        sessionType.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 15)!, NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
+        
+    }
+    
     func createToolbar() -> UIToolbar {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -55,7 +62,7 @@ class CreateSessionViewController: UIViewController {
         timeFormatter.allowedUnits = [.hour, .minute]
         
         SoundManager.shared.playButtonSound(sound: .chillButton)
-        self.timeField.text = timeFormatter.string(from: timePicker.countDownDuration)
+        self.timeField.text = "Time: \(timeFormatter.string(from: timePicker.countDownDuration)!)"
         self.view.endEditing(true)
     }
 

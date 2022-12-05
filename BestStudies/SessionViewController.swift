@@ -16,7 +16,8 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var totalTimeElapsedLabel: UILabel! // Time elapsed
     @IBOutlet weak var totalTimeRemainingLabel: UILabel! // Time remaining
     @IBOutlet weak var membersTableView: UITableView!
-
+    @IBOutlet weak var leaveButton: UIButton!
+    
     var members:[MCPeerID]? // List of group member names
     
     var joinTimes:[Date]?
@@ -45,9 +46,6 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
         
         connectionManager?.sessionViewController = self
 
@@ -99,9 +97,13 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Creating timers for every member
         studyTimers = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(incrementStudyTime), userInfo: nil, repeats: true)
-//        for index in studyTimers!.indices {
-//            studyTimers![index] = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(incrementStudyTime), userInfo: index, repeats: true)
-//        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
+        self.membersTableView.backgroundColor = .clear
+        let leaveButtonFont = NSAttributedString(string: "Leave", attributes: [.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 20)!])
+        self.leaveButton.setAttributedTitle(leaveButtonFont, for: .normal)
     }
     
     // Called after a non-host leaves, allowing other devices to clean up variables corresponding to that left member
@@ -214,6 +216,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.nameLabel?.text = members![row].displayName
         cell.slackLabel?.text = timeFormatter.string(from: slackTimes![row])
         cell.studyLabel?.text = timeFormatter.string(from: studyTimes![row])
+        cell.backgroundColor = .clear
         return cell
     }
 

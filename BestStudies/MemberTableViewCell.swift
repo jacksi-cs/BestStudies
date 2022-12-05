@@ -16,6 +16,12 @@ class MemberTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        nameLabel.font = UIFont(name: "Chalkduster", size: 15)
+        nameLabel.textColor = .white
+        studyLabel.font = UIFont(name: "Chalkduster", size: 15)
+        studyLabel.textColor = .white
+        slackLabel.font = UIFont(name: "Chalkduster", size: 15)
+        slackLabel.textColor = .white
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

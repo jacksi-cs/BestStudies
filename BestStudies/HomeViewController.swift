@@ -30,12 +30,7 @@ class HomeViewController: UIViewController {
 //        self.navigationController?.navigationBar.shadowImage = UIImage()
 //        self.navigationController?.navigationBar.isTranslucent = true
 //        self.navigationController?.view.backgroundColor = .clear
-        DatabaseManager.shared.getStats {
-            [weak self] success in
-            guard success else {
-                return
-            }
-        }
+        
         connectionManager.homeViewController = self
         
         // Do any additional setup after loading the view.

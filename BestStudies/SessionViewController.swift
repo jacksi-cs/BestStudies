@@ -228,12 +228,7 @@ class SessionViewController: UIViewController, UITableViewDelegate, UITableViewD
 //        for studyTimer in studyTimers! {
 //            studyTimer.invalidate()
 //        }
-        var nameArray: [String]
-        nameArray = []
-        for member in members! {
-            nameArray.append(member.displayName)
-        }
-        DatabaseManager.shared.updateStats(studyTime: studyTimes![0], slackTime: slackTimes![0], names: nameArray)
+        
         members = nil // List of group member names
         studyTimers = nil // TODO: Might be able to, in the future, not have individual timers but just stop incrementing individuals studyTimes when off; or keep track of initial room join time and calculate studyTimes with (current time - join time) - total slack time
         studyTimes = nil // List of each group member's total study time

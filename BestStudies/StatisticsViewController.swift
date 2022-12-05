@@ -9,40 +9,24 @@ import UIKit
 
 class StatisticsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var tableArray = ["Total Study Time:  ",
-                      "Total Slack Time: ",
-                      "Total Sessions:  ",
-                      "Top Study Time:  ",
-                      "Worst Slacking Time  ",
-                      "Top Study Buddy:  "]
+    let tableArray = ["Total Study Time:  1h",
+                        "Total Sessions:  15",
+                        "Top Study Buddy:  Jack",
+                        "Top Study Time:  15m",
+                      "Worst Slacking Time  5m",
+                        "Worst Study Partner  Jim"]
     
     let cellIdentifier = "StatCellIdentifier"
-    
-    var user: UserStats?
-    
 
     @IBOutlet weak var statTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "chalk.jpeg")!)
-        self.statTableView.backgroundColor = .clear
-        user = DatabaseManager.shared.getCache()
-        updateArray()
 
         // Do any additional setup after loading the view.
         statTableView.delegate = self
         statTableView.dataSource = self
-        statTableView.rowHeight = UITableView.automaticDimension
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.statTableView.backgroundColor = .clear
-        user = DatabaseManager.shared.getCache()
-        updateArray()
-        self.statTableView.reloadData()
-
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,18 +37,8 @@ class StatisticsViewController: UIViewController, UITableViewDelegate, UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath as IndexPath)
         let row = indexPath.row
         cell.textLabel?.text = tableArray[row]
-        cell.textLabel?.textColor = .white
-        cell.backgroundColor = .clear
+        cell.backgroundColor = .white
         return cell
-    }
-    
-    func updateArray() -> Void {
-        tableArray[0] = "Total Study Time:  " + "\n" + String(format: "%.2f", user!.studyTime) + " seconds"
-        tableArray[1] = "Total Slack Time: " + "\n" + String(format: "%.2f", user!.slackTime) + " seconds"
-        tableArray[2] = "Total Sessions:  " + "\n" + String(user!.totalSessions)
-        tableArray[3] = "Top Study Time:  " + "\n" + String(format: "%.2f", user!.topStudyTime) + " seconds"
-        tableArray[4] = "Worst Slacking Time  " + "\n" + String(format: "%.2f", user!.worstSlackTime) + " seconds"
-        tableArray[5] = "Top Study Buddy:  " + "\n" + user!.topBuddy
     }
     
 
